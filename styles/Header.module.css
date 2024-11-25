@@ -1,16 +1,16 @@
 
 * {	/* CSS HEX */
-	--cadet-gray: #8da1b9ff;
-	--secondary: rgb(51, 127, 154);
-	--thistle: #cbb3bfff;
+	--cadet-gray: rgb(57, 66, 77);
+	--accent: rgb(51, 127, 154);
+	--secondary: rgb(243, 209, 225);
 	--pale-dogwood: #dbc7beff;
-	--accent: rgb(239, 149, 191);
+	--primary: rgb(239, 149, 191);
 	font-family: "Nunito";
 }
 
 /*SMALL SETTINGS*/
 .header{
-    background-color: var(--accent);
+    background-color: var(--primary);
     margin: 0;
     padding: 1.5rem;
     display: flex;
@@ -31,16 +31,52 @@
 }
 .hamburgerIcon{
     padding-right: 1rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
     width: 40px;
      height:40px;
-}
-.hamburgerIcon:hover{
-    color: yellow;
+     z-index: 1000;
 }
 
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width:250px;
+    height: 100%;
+    background-color: var(--secondary);
+    padding: 1rem;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateX(100%);
+}
+
+.sidebar.open{
+    transform: translateX(0);
+}
+.sidebar a{
+    margin-top: 1rem;
+    text-decoration: none;
+    color: var(--cadet-gray);
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.sidebar a:hover{
+    border-bottom: 2px solid var(--pale-dogwood);
+     font-style: italic;
+ }
+ 
 .navLinks{
     display: none;
 }
+
 
 
 
@@ -59,6 +95,13 @@
 
     .navLinks{
         display: none;
+    }
+    .sidebar{  
+        top: 0;
+        right: 0;
+        width:400px;
+        padding: 1rem;
+        
     }
 }
 
@@ -92,10 +135,12 @@
     }
 
     .navLinks a:hover{
-       border-bottom: 2px solid var(--secondary);
+       border-bottom: 2px solid var(--accent);
         font-style: italic;
     }
     
-    
+    .sidebar{
+        display: none;
+    }
 
 }
