@@ -1,17 +1,16 @@
-*{
-    box-sizing: border-box;
-    /* CSS HEX */
---cadet-gray: #8da1b9ff;
---cadet-gray-2: #95adb6ff;
---thistle: #cbb3bfff;
---pale-dogwood: #dbc7beff;
---salmon-pink: #ef959cff;
+* {
+	box-sizing: border-box;
+	/* CSS HEX */
+	--cadet-gray: #8da1b9ff;
+	--secondary: #95adb6ff;
+	--thistle: #cbb3bfff;
+	--pale-dogwood: #dbc7beff;
+	--accent: rgb(239, 149, 191);
+	font-family: "Nunito";
 }
 
-body{
-    margin: 0;
-    padding: 0;
-    background-color:pink ;
-    
+body {
+	margin: 0;
+	padding: 0;
 
 }

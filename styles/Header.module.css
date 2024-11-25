@@ -1,6 +1,16 @@
+
+* {	/* CSS HEX */
+	--cadet-gray: #8da1b9ff;
+	--secondary: rgb(51, 127, 154);
+	--thistle: #cbb3bfff;
+	--pale-dogwood: #dbc7beff;
+	--accent: rgb(239, 149, 191);
+	font-family: "Nunito";
+}
+
 /*SMALL SETTINGS*/
 .header{
-    background-color: #ef959cff;
+    background-color: var(--accent);
     margin: 0;
     padding: 1.5rem;
     display: flex;
@@ -32,11 +42,7 @@
     display: none;
 }
 
-.active-link{
-    font-weight: bold;
-    text-decoration: underline;
-     color: #08ec18;
-  }
+
 
 /*MEDIUM SCREENS*/
 
@@ -59,7 +65,7 @@
 /*LARGE SCREENS*/
 
 
-@media (min-width:1025px){
+@media (min-width:1700px){
     
     .header{
         padding: 2rem;
@@ -73,15 +79,22 @@
     .navLinks{
         display: inline-flex;
        align-items: center;
-        font-size: 4rem;
-        color: #08ec18;
-        text-decoration: none !important;
+        font-size: 3rem;
+        text-decoration: none;
+        gap: 1.2rem;
+        padding: 0rem 4rem;
     }
-    .active-link{
+  
+    .navLinks a{
+        text-decoration: none;
+        color: white;
         font-weight: bold;
-        text-decoration: underline;
-         color: #08ec18;
-      }
+    }
+
+    .navLinks a:hover{
+       border-bottom: 2px solid var(--secondary);
+        font-style: italic;
+    }
     
     
 

@@ -14,8 +14,8 @@ export function Header() {
             </svg>
            </div>
            <nav className= {styles.navLinks} >
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="favourites">Favourites</NavLink>
+                <NavLink to="/" > Home</NavLink>
+                <NavLink to="favourites"> Favourites</NavLink>
                 <NavLink to="filter">Genres</NavLink>
                 <NavLink to="reset">reset</NavLink>
 
