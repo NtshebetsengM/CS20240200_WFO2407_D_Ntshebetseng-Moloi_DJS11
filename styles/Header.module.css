@@ -1,0 +1,88 @@
+/*SMALL SETTINGS*/
+.header{
+    background-color: #ef959cff;
+    margin: 0;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.3);
+}
+
+.logo{
+    font-size: 2rem;
+    padding: 0rem 1rem;
+    margin: 0;
+    color: white;
+    font-family: "Bagel Fat One", sans-serif;
+    text-shadow: 2px 2px 0px grey, 
+    -2px -2px 0px grey,
+    2px -2px 0px grey,
+    -2px 2px 0px grey;
+}
+.hamburgerIcon{
+    padding-right: 1rem;
+    width: 40px;
+     height:40px;
+}
+.hamburgerIcon:hover{
+    color: yellow;
+}
+
+.navLinks{
+    display: none;
+}
+
+.active-link{
+    font-weight: bold;
+    text-decoration: underline;
+     color: #08ec18;
+  }
+
+/*MEDIUM SCREENS*/
+
+@media (min-width:600px){
+    .logo{
+        font-size: 3.5rem;
+    }
+   
+    .hamburgerIcon{
+        padding-right: 1rem;
+        width: 6rem;
+         height: 6rem;
+    }
+
+    .navLinks{
+        display: none;
+    }
+}
+
+/*LARGE SCREENS*/
+
+
+@media (min-width:1025px){
+    
+    .header{
+        padding: 2rem;
+    }
+    .logo{
+        font-size: 5rem;
+    }
+    .hamburgerIcon{
+        display: none;
+    }
+    .navLinks{
+        display: inline-flex;
+       align-items: center;
+        font-size: 4rem;
+        color: #08ec18;
+        text-decoration: none !important;
+    }
+    .active-link{
+        font-weight: bold;
+        text-decoration: underline;
+         color: #08ec18;
+      }
+    
+    
+
+}
