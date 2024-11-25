@@ -1,6 +1,16 @@
 * {
 	box-sizing: border-box;
 	font-family: "Nunito";
+    
+* {	/* CSS HEX */
+	--cadet-gray: rgb(57, 66, 77);
+	--accent: rgb(51, 127, 154);
+	--secondary: rgb(243, 209, 225);
+	--pale-dogwood: #dbc7beff;
+	--primary: rgb(239, 149, 191);
+	font-family: "Nunito";
+}
+
 }
 
 body {
