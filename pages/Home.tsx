@@ -16,6 +16,7 @@ interface Podcast {
 export function Home() {
   const previewApiUrl = 'https://podcast-api.netlify.app';
   const genreApiUrl = (id: number) => `https://podcast-api.netlify.app/genre/${id}`; // Endpoint with genre ID
+  
   const [podcasts, setPodcasts] = useState<Podcast[]>([]);
   const [genres, setGenres] = useState<{ id: number; title: string }[]>([]); // State to store genres
   const [podcastsWithGenres, setPodcastsWithGenres] = useState<Podcast[]>([]);
