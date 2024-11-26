@@ -140,14 +140,7 @@ export function Home() {
   
 
   function handleFilterClick(genre:string){
-
-setSelectedGenres((prevSelectedGenres) => {
-  if(prevSelectedGenres.includes(genre)){
-    return prevSelectedGenres.filter((g)=> g !== genre)
-  }else{
-    return [...prevSelectedGenres,genre]
-  }
-})
+      setSelectedGenres([genre])
   }
 
   const filteredPodcasts = podcastsWithGenres.filter((podcast) =>{
@@ -171,15 +164,20 @@ setSelectedGenres((prevSelectedGenres) => {
       <div className={`${styles.filters} ${!isOpen ? styles.hidden : ''}`}>
         {genres.length > 0 ? (
           genres.map((genre) => (
-            <button key={genre.id} onClick={() => handleFilterClick(genre.title)}>
+            <button key={genre.id} onClick={() => handleFilterClick(genre.title)}
+            className={selectedGenres.includes(genre.title) ? styles.selected : ''}>
               {genre.title}
             </button>
           ))
         ) : (
           <p>No genres available</p>
         )}
+        <div>
+          <button className={styles.clearBtn} onClick={() => setSelectedGenres([])}>
+            clear
+          </button>
+        </div>
       </div>
-
       <ul className={styles.podcastList}>
         {filteredPodcasts
           .sort((a, b) => a.title.localeCompare(b.title))

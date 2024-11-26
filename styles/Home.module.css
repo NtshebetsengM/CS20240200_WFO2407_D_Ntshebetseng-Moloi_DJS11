@@ -79,11 +79,22 @@ h1{
     color: var(--accent);
     font-weight: bold;
     font-size: 1.5rem;
+    transition: all 200ms ease-in;
 }
 
-.active{
+/* .filters button:hover{
+    cursor: pointer;
     background-color: var(--accent);
     color: white;
+} */
+
+button.selected{
+    background-color: var(--accent);
+    color: white;
+}
+
+.clearBtn{
+    background-color: var(--secondary);
 }
 
 .hidden{
