@@ -1,38 +1,61 @@
 import styles from "../styles/Home.module.css"
+import { useState, useEffect } from "react"
 
 //podcasts need to be sorted alphabetically
 //preview img
 export function Home() {
+
+  const previewApiUrl = 'https://podcast-api.netlify.app'  
+  //const genreApiUrl = `https://podcast-api.netlify.app/genre/${id}` //<ID> refers to specific id of object
+  //const showApiUrl = `https://podcast-api.netlify.app/id/${id}`
+  
+  const [ podcasts, setPodcasts] = useState([])
+  const [ loading, setLoading ] = useState(true)
+  const [error, setError ] = useState(null)
+  
+  useEffect(() =>{
+      fetch(previewApiUrl)
+      .then(res => 
+        { 
+          if(!res.ok){
+            throw new Error("Data fetching failed")
+          }
+          return res.json()
+        })
+      .then(data => {
+        setPodcasts(data)
+        setLoading(false)
+      
+      })
+      .catch((error) => {
+        console.error('failed to fetch data', error)
+        setError(error.message)
+        setLoading(false)
+      
+      })
+  },[])
+  
+  if(loading) {return <h1>Loading...</h1>}
+  if(error){
+    return <h1>something went wrong</h1>
+  }
+
+
   return (
     <>
     <input type="text" />
     <button>search</button>
-        <h2>discover</h2>
-        <ul>
-          <li>
-              <div>
-                <img src="podcast.png" alt="" />
-                <h3>title</h3>
-                <p>seasons | genre</p>
-                <p>last update date</p>
-              </div>
+        <h1>discover</h1>
+        <ul className={styles.podcastList}>
+        {podcasts.sort((a, b)=> a.title.localeCompare(b.title)).map((item) =>(
+            <li key={item.id} className={styles.podcastList_item}>
+                <img src={item.image} alt="" className={styles.image} />
+                <h2>{item.title}</h2>
+                <p>seasons{item.seasons} | genre</p>
+                <p>{item.updated}</p>
             </li>
-          <li>
-            <div>
-                <img src="podcast.png" alt="" />
-                <h3>title</h3>
-                <p>seasons | genre</p>
-                <p>last update date</p>
-              </div>
-              </li>
-          <li>
-            <div>
-                <img src="podcast.png" alt="" />
-                <h3>title</h3>
-                <p>seasons | genre</p>
-                <p>last update date</p>
-              </div>
-          </li>
+        ))}
+          
         </ul>
 
     </>

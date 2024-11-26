@@ -1,0 +1,51 @@
+*{
+    --background: rgb(244, 240, 242);
+}
+
+/*SMALL SCREENS*/
+.podcastList {
+	border: 2px solid red;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.podcastList_item {
+	list-style-type: none;
+	border-radius: 10px;
+	display: block;
+	background-color: var(--background);
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.image {
+	width: 50%;
+	display: block;
+	margin: 1rem auto;
+    border-radius: 10px;
+}
+
+/*MEDIUM SCREENS*/
+
+@media (min-width:600px){
+    .podcastList {
+        border: 2px solid red;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/*largish*/
+@media (min-width:1000px){
+    .podcastList{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/*LARGE SCREENS*/
+
+@media (min-width:1700px){
+    .podcastList {
+        border: 2px solid red;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
