@@ -22,6 +22,8 @@ export function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([])
+
 
   // Fetch podcasts
   useEffect(() => {
@@ -77,31 +79,43 @@ export function Home() {
   useEffect(() => {
     if (podcasts.length > 0) {
       const updatedPodcasts = [...podcasts];
-
+  
+      // Iterate over each podcast
       Promise.all(
         updatedPodcasts.map((podcast, index) => {
-          const genreId = podcast.genres[0];
-          const url = genreApiUrl(genreId); // API to get genre by id
-
-          return fetch(url)
-            .then(res => res.json())
-            .then(data => {
-              updatedPodcasts[index] = {
-                ...updatedPodcasts[index],
-                genre: data.title
-              };
-            })
-            .catch((error) => {
-              console.error('Error fetching podcast genre:', error);
-            });
+          const genrePromises = podcast.genres.map((genreId: number) => {
+            const url = genreApiUrl(genreId); // API to get genre by id
+  
+            return fetch(url)
+              .then(res => res.json())
+              .then(data => data.title) // Extracting genre title from API response
+              .catch((error) => {
+                console.error(`Error fetching genre for ID ${genreId}`, error);
+                return null; // Return null in case of an error
+              });
+          });
+  
+          return Promise.all(genrePromises).then((genres) => {
+            // Filter out null values if any genre fetch failed
+            const validGenres = genres.filter((genre) => genre !== null);
+            
+            updatedPodcasts[index] = {
+              ...updatedPodcasts[index],
+              genre: validGenres.join(' | ') // Join multiple genres into a comma-separated string
+            };
+          });
         })
       )
         .then(() => {
           setPodcastsWithGenres(updatedPodcasts);
           setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error processing podcasts with genres:', error);
         });
     }
   }, [podcasts]);
+  
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -123,9 +137,23 @@ export function Home() {
     setIsOpen(!isOpen);
   }
 
+  
+
   function handleFilterClick(genre:string){
-console.log('click',genre)
+
+setSelectedGenres((prevSelectedGenres) => {
+  if(prevSelectedGenres.includes(genre)){
+    return prevSelectedGenres.filter((g)=> g !== genre)
+  }else{
+    return [...prevSelectedGenres,genre]
   }
+})
+  }
+
+  const filteredPodcasts = podcastsWithGenres.filter((podcast) =>{
+    if(selectedGenres.length === 0 ) return true
+    return selectedGenres.some((genre) => podcast.genre.includes(genre))
+  })
 
   return (
     <>
@@ -153,14 +181,15 @@ console.log('click',genre)
       </div>
 
       <ul className={styles.podcastList}>
-        {podcastsWithGenres
+        {filteredPodcasts
           .sort((a, b) => a.title.localeCompare(b.title))
           .map((item) => (
             <li key={item.id}>
               <button className={styles.podcastList_item}>
                 <img src={item.image} alt="" className={styles.image} />
                 <h2>{item.title}</h2>
-                <p>seasons {item.seasons} | {item.genre}</p>
+                <p>seasons {item.seasons}</p>
+                <p>{item.genre}</p>
                 <p>{formatDate(item.updated)}</p>
               </button>
             </li>
