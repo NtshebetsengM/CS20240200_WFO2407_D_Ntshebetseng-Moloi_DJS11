@@ -23,6 +23,7 @@ export function Home() {
   const [ podcastsWithGenres, setPodcastsWithGenres ] = useState<Podcast[]>([])
   const [ loading, setLoading ] = useState(true)
   const [error, setError ] = useState<string | null>(null)
+  const [ isOpen, setIsOpen ] = useState(false)
  
   
   useEffect(() =>{
@@ -96,6 +97,10 @@ export function Home() {
     })
   }
 
+  function toggleFilterCard(){
+    setIsOpen(!isOpen)
+  }
+
 
   return (
     <>
@@ -107,10 +112,25 @@ export function Home() {
               <img src="assets\svgs\search.svg" alt="" className={styles.icon} />
           </button>
             
-        <button className={styles.filterBtn}>
+        <button className={styles.filterBtn} onClick={toggleFilterCard}>
             <img src="assets\svgs\filter.svg" alt="" className={styles.icon} />
         </button>
     </div>
+
+
+      <div className={`${styles.filters} ${isOpen ? styles.hidden : ''}`}>
+        <button>Personal Growth</button>
+        <button>Investigative Journalism</button>
+        <button>History</button>
+        <button>Comedy</button>
+        <button>Entertainment</button>
+        <button>Business</button>
+        <button>Fiction</button>
+        <button>News</button>
+        <button>Kids and Family</button>
+      </div>
+      
+
         
         <ul className={styles.podcastList}>
         {podcastsWithGenres.sort((a, b)=> a.title.localeCompare(b.title)).map((item) =>(
