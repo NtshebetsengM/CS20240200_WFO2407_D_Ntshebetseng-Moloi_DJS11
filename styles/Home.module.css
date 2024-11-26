@@ -102,6 +102,13 @@ button.selected{
 }
 /*LIST*/
 
+.favBtn{
+    border: none;
+}
+.favourite{
+    background-color: var(--primary);
+}
+
 .podcastList {
     display: grid;
     grid-template-columns: 1fr;

@@ -25,6 +25,7 @@ export function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([])
   const [sortOption, setSortOption] =useState<string>('A-Z')
+  const [favourites, setFavourites] = useState<string[]>([])
 
 
   // Fetch podcasts
@@ -169,6 +170,11 @@ export function Home() {
     }
   })
 
+  function toggleFavourite(id:string){
+    setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
+    )
+  }
+
   return (
     <>
       <h1>Discover New Podcasts</h1>
@@ -195,7 +201,7 @@ export function Home() {
           genres.map((genre) => (
             <button key={genre.id} onClick={() => handleFilterClick(genre.title)}
             className={selectedGenres.includes(genre.title) ? styles.selected : ''}>
-              {genre.title}
+              {genre.title} 
             </button>
           ))
         ) : (
@@ -209,17 +215,20 @@ export function Home() {
       </div>
       <ul className={styles.podcastList}>
         {sortedPodcasts
-          .map((item) => (
+          .map((item) => {
+            const isFavourite = favourites.includes(item.id)
+            return (
             <li key={item.id}>
               <button className={styles.podcastList_item}>
                 <img src={item.image} alt="" className={styles.image} />
-                <h2>{item.title}</h2>
+                <h2>{item.title} | <button onClick={() => toggleFavourite(item.id)} 
+                className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}>fav</button></h2>
                 <p>seasons {item.seasons}</p>
                 <p>{item.genre}</p>
                 <p>{formatDate(item.updated)}</p>
               </button>
             </li>
-          ))}
+          )})}
       </ul>
     </>
   );
