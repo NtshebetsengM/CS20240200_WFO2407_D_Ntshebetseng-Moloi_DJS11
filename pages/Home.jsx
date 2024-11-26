@@ -12,6 +12,7 @@ export function Home() {
   const [ podcasts, setPodcasts] = useState([])
   const [ loading, setLoading ] = useState(true)
   const [error, setError ] = useState(null)
+ 
   
   useEffect(() =>{
       fetch(previewApiUrl)
@@ -34,7 +35,8 @@ export function Home() {
       
       })
   },[])
-  
+
+
   if(loading) {return <h1>Loading...</h1>}
   if(error){
     return <h1>something went wrong</h1>
@@ -43,9 +45,20 @@ export function Home() {
 
   return (
     <>
-    <input type="text" />
-    <button>search</button>
-        <h1>discover</h1>
+    <h1>Discover New Podcasts</h1>
+    <div className={styles.container}>
+        
+        <input type="text" placeholder="looking for something?" className={styles.searchInput}/>
+          <button className={styles.searchBtn}>
+              <img src="assets\svgs\search.svg" alt="" className={styles.icon} />
+          </button>
+            
+        <button className={styles.filterBtn}>
+            <img src="assets\svgs\filter.svg" alt="" className={styles.icon} />
+        </button>
+
+    </div>
+        
         <ul className={styles.podcastList}>
         {podcasts.sort((a, b)=> a.title.localeCompare(b.title)).map((item) =>(
             <li key={item.id} className={styles.podcastList_item}>
