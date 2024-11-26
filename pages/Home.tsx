@@ -209,7 +209,6 @@ export function Home() {
       </div>
       <ul className={styles.podcastList}>
         {sortedPodcasts
-          .sort((a, b) => a.title.localeCompare(b.title))
           .map((item) => (
             <li key={item.id}>
               <button className={styles.podcastList_item}>
