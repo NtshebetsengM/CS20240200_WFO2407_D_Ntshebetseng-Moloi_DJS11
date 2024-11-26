@@ -37,8 +37,8 @@ h1{
 .filterBtn{
     background-color: transparent;
     border: none;
-    padding-right: 2rem;
-    
+    border-right: 2px solid var(--background);    
+    padding-right: 1.5rem;
 }
 
 
@@ -82,11 +82,11 @@ h1{
     transition: all 200ms ease-in;
 }
 
-/* .filters button:hover{
+.filters button:hover{
     cursor: pointer;
     background-color: var(--accent);
     color: white;
-} */
+}
 
 button.selected{
     background-color: var(--accent);

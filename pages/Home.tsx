@@ -23,6 +23,7 @@ export function Home() {
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([])
+  const [sortOption, setSortOption] =useState<string>('A-Z')
 
 
   // Fetch podcasts
@@ -148,6 +149,25 @@ export function Home() {
     return selectedGenres.some((genre) => podcast.genre.includes(genre))
   })
 
+  function handleSortChange (event: React.ChangeEvent<HTMLSelectElement>) {
+    setSortOption(event.target.value)
+  }
+
+  const sortedPodcasts = filteredPodcasts.sort((a, b) =>{
+    switch(sortOption){
+      case 'A-Z':
+        return a.title.localeCompare(b.title)
+      case 'Z-A':
+        return b.title.localeCompare(a.title)
+      case 'Newest':
+        return new Date(b.updated).getTime() - new Date(a.updated).getTime()
+      case 'Oldest':
+        return new Date(a.updated).getTime() - new Date(b.updated).getTime()
+      default:
+        return 0
+    }
+  })
+
   return (
     <>
       <h1>Discover New Podcasts</h1>
@@ -159,6 +179,14 @@ export function Home() {
         <button className={styles.filterBtn} onClick={toggleFilterCard}>
           <img src="assets/svgs/filter.svg" alt="" className={styles.icon} />
         </button>
+
+        <label htmlFor="sort"></label>
+        <select name="sort" id="sort" onChange={handleSortChange}>
+          <option value="A-Z"> A-Z</option>
+          <option value="Z-A">Z-A</option>
+          <option value="Newest">Newest</option>
+          <option value="Oldest">Oldest</option>
+        </select>
       </div>
 
       <div className={`${styles.filters} ${!isOpen ? styles.hidden : ''}`}>
@@ -179,7 +207,7 @@ export function Home() {
         </div>
       </div>
       <ul className={styles.podcastList}>
-        {filteredPodcasts
+        {sortedPodcasts
           .sort((a, b) => a.title.localeCompare(b.title))
           .map((item) => (
             <li key={item.id}>
