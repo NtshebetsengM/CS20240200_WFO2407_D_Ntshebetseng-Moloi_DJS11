@@ -42,6 +42,15 @@ export function Home() {
     return <h1>something went wrong</h1>
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-ZA', {
+      year: 'numeric',  // Example: '2024'
+      month: 'short',   // Example: 'Nov'
+      day: 'numeric',   // Example: '26'
+    })
+  }
+
 
   return (
     <>
@@ -65,7 +74,7 @@ export function Home() {
                 <img src={item.image} alt="" className={styles.image} />
                 <h2>{item.title}</h2>
                 <p>seasons{item.seasons} | genre</p>
-                <p>{item.updated}</p>
+                <p>{formatDate(item.updated)}</p>
             </li>
         ))}
           
