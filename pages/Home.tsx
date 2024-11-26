@@ -119,6 +119,14 @@ export function Home() {
     }
   }, [podcasts]);
   
+  useEffect(() => {
+    const savedFavourites = JSON.parse(localStorage.getItem('favourites') || '[]');
+    setFavourites(savedFavourites);
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+  }, [favourites]);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -136,6 +144,8 @@ export function Home() {
     });
   };
 
+
+  
   function toggleFilterCard() {
     setIsOpen(!isOpen);
   }
@@ -174,6 +184,10 @@ export function Home() {
     setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
     )
   }
+  // const favouritedPodcasts = sortedPodcasts.filter((podcast) =>
+  //     favourites.includes(podcast.id)
+  // )
+
 
   return (
     <>
