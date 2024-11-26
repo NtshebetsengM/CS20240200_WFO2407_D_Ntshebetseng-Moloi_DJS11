@@ -114,11 +114,15 @@ export function Home() {
         
         <ul className={styles.podcastList}>
         {podcastsWithGenres.sort((a, b)=> a.title.localeCompare(b.title)).map((item) =>(
-            <li key={item.id} className={styles.podcastList_item}>
+            
+            <li key={item.id} >
+              <button className={styles.podcastList_item}>
                 <img src={item.image} alt="" className={styles.image} />
                 <h2>{item.title}</h2>
                 <p>seasons {item.seasons} |  {item.genre} </p>
                 <p>{formatDate(item.updated)}</p>
+              </button>
+                
             </li>
         ))}
           

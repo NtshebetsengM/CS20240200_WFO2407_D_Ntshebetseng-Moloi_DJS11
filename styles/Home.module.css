@@ -15,6 +15,8 @@ h1{
     padding: 1rem;
     margin: 3rem;
     color: var(--accent);
+    font-weight: 900;
+    font-size: 3rem;
     
 }
 
@@ -29,6 +31,8 @@ h1{
    border-radius: 10px;
    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .filterBtn{
     background-color: transparent;
@@ -60,9 +64,12 @@ h1{
 .podcastList {
     display: grid;
     grid-template-columns: 1fr;
+    list-style-type: none;
+   
+
 }
 .podcastList_item {
-	list-style-type: none;
+	
 	border-radius: 10px;
 	display: block;
 	background-color: var(--background);
@@ -70,7 +77,15 @@ h1{
     padding: 1rem;
     text-align: center;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 200ms linear;
+    border: none;
+    cursor: pointer;
 }
+
+.podcastList_item:hover{
+    background-color: var(--secondary);
+    transform: scale(1.1);
+}    
 
 .image {
 	width: 50%;
@@ -86,6 +101,9 @@ h1{
     .podcastList {
         
         grid-template-columns: 1fr 1fr;
+    }
+    h1{
+        font-size: 4rem;
     }
 
  
@@ -103,5 +121,8 @@ h1{
 @media (min-width:1700px){
     .podcastList {
         grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    h1{
+        font-size: 6rem;
     }
 }
