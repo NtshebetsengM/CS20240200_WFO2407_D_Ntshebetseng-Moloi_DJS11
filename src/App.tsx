@@ -6,8 +6,8 @@ import {SeasonDetail } from "../pages/SeasonDetail"
 import { EpisodeDetail } from "../pages/EpisodeDetail"
 import { Favourites } from "../pages/Favourites"
 import { GenreFilter } from "../pages/GenreFilter"
-import { Reset } from "../components/Reset"
-import { AudioPlayer } from "../components/AudioPlayer"
+// import { Reset } from "../components/Reset"
+// import { AudioPlayer } from "../components/AudioPlayer"
 
 function App() {
  return (

@@ -26,7 +26,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     isFilterOpen
 }) => {
     const handleFilterClick = (genre:string) => {
-        setSelectedGenres(prev => prev.includes(genre) ? prev.filter(g => g !== genre): [...prev, genre])
+        setSelectedGenres((prev) => prev.includes(genre) ? [] : [genre])
     }
     return (
         <div>
