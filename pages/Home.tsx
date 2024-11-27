@@ -1,5 +1,6 @@
 //@ts-check
 import { useEffect, useState } from "react";
+import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/Home.module.css";
 
 interface Podcast {
@@ -8,14 +9,14 @@ interface Podcast {
   description: string;
   seasons: number;
   image: string;
-  genres: number[];  // Assuming genres is an array of numbers (IDs)
+  genres: number[];  
   updated: string;
-  genre: string;  // Optional field for genre (will be populated later)
+  genre: string;  
 }
 
 export function Home() {
   const previewApiUrl = 'https://podcast-api.netlify.app';
-  const genreApiUrl = (id: number) => `https://podcast-api.netlify.app/genre/${id}`; // Endpoint with genre ID
+  const genreApiUrl = (id: number) => `https://podcast-api.netlify.app/genre/${id}`; 
   
   const [podcasts, setPodcasts] = useState<Podcast[]>([]);
   const [genres, setGenres] = useState<{ id: number; title: string }[]>([]); // State to store genres
@@ -25,10 +26,10 @@ export function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([])
   const [sortOption, setSortOption] =useState<string>('A-Z')
-  const [favourites, setFavourites] = useState<string[]>([])
+  const [favourites, setFavourites] = useFavourites()
 
 
-  // Fetch podcasts
+  // FETCH PODCASTS
   useEffect(() => {
     fetch(previewApiUrl)
       .then(res => {
@@ -48,12 +49,12 @@ export function Home() {
       });
   }, []);
 
-  // Fetch genres (assuming you have genre IDs)
-  const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Hardcoded genre IDs, or fetch them dynamically from a different endpoint
+  // FETCH GENRES
+  const genreIds = [1, 2, 3, 4, 5, 6, 7, 8, 9]; 
 
   useEffect(() => {
-    // Fetch genre data for each ID
-    Promise.all(
+    
+    Promise.all(  //takes array of promises and runs them concurrently(waits for all to resolve or one to reject)
       genreIds.map(id =>
         fetch(genreApiUrl(id))
           .then(res => res.json())
@@ -104,7 +105,7 @@ export function Home() {
             
             updatedPodcasts[index] = {
               ...updatedPodcasts[index],
-              genre: validGenres.join(' | ') // Join multiple genres into a comma-separated string
+              genre:validGenres.length ? validGenres.join(' | ') : 'Unknown' 
             };
           });
         })
@@ -115,18 +116,12 @@ export function Home() {
         })
         .catch((error) => {
           console.error('Error processing podcasts with genres:', error);
+          setLoading(false)
         });
     }
   }, [podcasts]);
   
-  useEffect(() => {
-    const savedFavourites = JSON.parse(localStorage.getItem('favourites') || '[]');
-    setFavourites(savedFavourites);
-  }, []);
-  
-  useEffect(() => {
-    localStorage.setItem('favourites', JSON.stringify(favourites));
-  }, [favourites]);
+ 
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -134,7 +129,7 @@ export function Home() {
   if (error) {
     return <h1>Something went wrong</h1>;
   }
-
+ 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-ZA', {
@@ -150,7 +145,6 @@ export function Home() {
     setIsOpen(!isOpen);
   }
 
-  
 
   function handleFilterClick(genre:string){
       setSelectedGenres([genre])
@@ -181,16 +175,15 @@ export function Home() {
   })
 
   function toggleFavourite(id:string){
+    console.log('toggling favourite:', id)
     setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
     )
   }
-  // const favouritedPodcasts = sortedPodcasts.filter((podcast) =>
-  //     favourites.includes(podcast.id)
-  // )
-
+  
 
   return (
     <>
+          {/*TOOLBAR=SEARCH-SORT-FILTER */}
       <h1>Discover New Podcasts</h1>
       <div className={styles.container}>
         <input type="text" placeholder="Looking for something?" className={styles.searchInput} />
@@ -210,6 +203,7 @@ export function Home() {
         </select>
       </div>
 
+          {/*FILTER BUTTONS*/}
       <div className={`${styles.filters} ${!isOpen ? styles.hidden : ''}`}>
         {genres.length > 0 ? (
           genres.map((genre) => (
@@ -227,20 +221,26 @@ export function Home() {
           </button>
         </div>
       </div>
+
+      {/*PODCAST CARD/LIST*/}
       <ul className={styles.podcastList}>
         {sortedPodcasts
           .map((item) => {
             const isFavourite = favourites.includes(item.id)
             return (
             <li key={item.id}>
-              <button className={styles.podcastList_item}>
-                <img src={item.image} alt="" className={styles.image} />
-                <h2>{item.title} | <button onClick={() => toggleFavourite(item.id)} 
-                className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}>fav</button></h2>
-                <p>seasons {item.seasons}</p>
-                <p>{item.genre}</p>
-                <p>{formatDate(item.updated)}</p>
-              </button>
+                <div className={styles.podcastList_item}>
+                    <img src={item.image} alt="" className={styles.image} />
+                    <h2>{item.title} | 
+                    	<button onClick={() => toggleFavourite(item.id)} 
+                        	className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}>
+                          	fav
+                        </button>
+                    </h2>
+                    <p>seasons {item.seasons}</p>
+                    <p>{item.genre}</p>
+                    <p>{formatDate(item.updated)}</p>
+                </div>
             </li>
           )})}
       </ul>

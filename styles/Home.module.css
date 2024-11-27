@@ -104,10 +104,15 @@ button.selected{
 
 .favBtn{
     border: none;
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
 }
 .favourite{
     background-color: var(--primary);
 }
+
 
 .podcastList {
     display: grid;
