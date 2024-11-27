@@ -4,17 +4,9 @@ import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/Home.module.css";
 import { Toolbar } from "../components/Toolbar"
 import { PodcastList } from "../components/PodcastList"
+import { Podcast } from "components/interfaces/types";
 
-interface Podcast {
-  id: string;
-  title: string;
-  description: string;
-  seasons: number;
-  image: string;
-  genres: number[];  
-  updated: string;
-  genre: string;  
-}
+
 
 export function Home() {
   const previewApiUrl = 'https://podcast-api.netlify.app';
@@ -128,7 +120,7 @@ export function Home() {
  
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <h1 className={styles.heading}>Loading...</h1>;
   }
   if (error) {
     return <h1>Something went wrong</h1>;

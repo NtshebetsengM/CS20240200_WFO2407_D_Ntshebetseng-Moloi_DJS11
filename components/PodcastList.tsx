@@ -3,24 +3,8 @@
 // PodcastList.tsx
 import React from 'react';
 import styles from '../styles/Home.module.css';
+import {  PodcastListProps } from './interfaces/types'
 
-interface Podcast {
-  id: string;
-  title: string;
-  description: string;
-  seasons: number;
-  image: string;
-  genres: number[];
-  updated: string;
-  genre: string;
-}
-
-interface PodcastListProps {
-  podcasts: Podcast[];
-  favourites: string[];
-  toggleFavourite: (id: string) => void;
-  formatDate: (dateString: string) => string;
-}
 
 export const PodcastList: React.FC<PodcastListProps> = ({
   podcasts,
