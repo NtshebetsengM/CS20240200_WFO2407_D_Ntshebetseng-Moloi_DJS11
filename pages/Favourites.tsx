@@ -2,13 +2,19 @@
 import { useState, useEffect } from "react"
 import { Podcast } from "components/interfaces/types"
 import { PodcastList } from "../components/PodcastList"
-
+import { Toolbar } from "../components/Toolbar"
+import styles from "../styles/Home.module.css"
 
 export function Favourites() {
 
   const [ favourites, setFavourites ] = useState<Podcast[]>([])
   const [ loading, setLoading ] = useState(true)
   const [error, setError] = useState<string | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("A-Z");
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
       useEffect(()=> {
         const storedFavourites = localStorage.getItem('favourites')
@@ -55,8 +61,29 @@ export function Favourites() {
         });
       };
 
+      // Search and filter logic
+  const filteredFavourites = favourites.filter((podcast) => {
+    if (selectedGenres.length === 0) return true;
+    return selectedGenres.some((genre) => podcast.genre.includes(genre));
+  });
+
+  const sortedFavourites = filteredFavourites.sort((a, b) => {
+    switch (sortOption) {
+      case "A-Z":
+        return a.title.localeCompare(b.title);
+      case "Z-A":
+        return b.title.localeCompare(a.title);
+      case "Newest":
+        return new Date(b.updated).getTime() - new Date(a.updated).getTime();
+      case "Oldest":
+        return new Date(a.updated).getTime() - new Date(b.updated).getTime();
+      default:
+        return 0;
+    }
+  });
+
       if (loading) {
-        return <h1 >Loading...</h1>;
+        return <h1 className={styles.heading} >Loading...</h1>;
       }
       if (error) {
         return <h1>Something went wrong</h1>;
@@ -64,12 +91,24 @@ export function Favourites() {
 
     return (
       <div>
-        <h1>Your Favourites</h1>
+        <h1 className={styles.heading}>Your Favourites</h1>
+
+        <Toolbar
+        searchQuery={searchQuery}
+        onSearchChange={(e) => setSearchQuery(e.target.value)}
+        sortOption={sortOption}
+        onSortChange={(e) => setSortOption(e.target.value)}
+        toggleFilterCard={() => setIsOpen(!isOpen)}
+        genres={[]} // Add genres here if needed
+        selectedGenres={selectedGenres}
+        setSelectedGenres={setSelectedGenres}
+        isFilterOpen={isOpen}
+      />
         {favourites.length === 0 ? (
         <p>No favourites yet!</p>
       ) : (
         <PodcastList
-          podcasts={favourites}
+          podcasts={sortedFavourites}
           favourites={favourites.map((fav) => fav.id)}
           toggleFavourite={toggleFavourite}
           formatDate={formatDate}

@@ -16,7 +16,7 @@
     margin: 3rem;
     color: var(--accent);
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 4rem;
     
 }
 
@@ -29,6 +29,7 @@
     padding: 0.5rem;
     border-radius: 50%;
     cursor: pointer;
+    color: #aa0a0a;
 }
 .favourite{
     background-color: var(--primary);
