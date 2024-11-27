@@ -77,6 +77,7 @@ export function Home() {
         console.error('Error fetching genres:', error);
         setError(error.message);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this runs once
 
   // Fetch genres for each podcast
@@ -175,7 +176,6 @@ export function Home() {
   })
 
   function toggleFavourite(id:string){
-    console.log('toggling favourite:', id)
     setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
     )
   }
