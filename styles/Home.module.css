@@ -10,7 +10,7 @@
 /*SMALL SCREENS*/
 
 
-h1{
+.heading{
     text-align: center;
     padding: 1rem;
     margin: 3rem;
@@ -20,86 +20,7 @@ h1{
     
 }
 
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   gap: 1rem;
-   margin: 3rem;
-   background-color: var(--secondary) ;
-   padding: 1rem;
-   border-radius: 10px;
-   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-
-
-.filterBtn{
-    background-color: transparent;
-    border: none;
-    border-right: 2px solid var(--background);    
-    padding-right: 1.5rem;
-}
-
-
-.searchInput{
-    border-radius: 5px;
-    border: none;
-    padding: 0.6rem;
-    background-color: var(--background);
-    width: 80%;
-}
-.searchBtn{
-    background-color: transparent;
-    border: none;
-    padding-right: 1.5rem;
-    border-right: 2px solid var(--background);
-}
-.icon{
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.filters{
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    padding: 1rem;
-    margin: 1rem;
-    border-bottom: 2px solid var(--primary);
-    gap: 1rem;
-}
-
-.filters button{
-    flex: 1 1 100px;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 10px;
-    color: var(--accent);
-    font-weight: bold;
-    font-size: 1.5rem;
-    transition: all 200ms ease-in;
-}
-
-.filters button:hover{
-    cursor: pointer;
-    background-color: var(--accent);
-    color: white;
-}
-
-button.selected{
-    background-color: var(--accent);
-    color: white;
-}
-
-.clearBtn{
-    background-color: var(--secondary);
-}
-
-.hidden{
-    display: none;
-}
 /*LIST*/
 
 .favBtn{

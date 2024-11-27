@@ -1,7 +1,9 @@
 //@ts-check
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/Home.module.css";
+import { Toolbar } from "../components/Toolbar"
+import { PodcastList } from "../components/PodcastList"
 
 interface Podcast {
   id: string;
@@ -26,6 +28,7 @@ export function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([])
   const [sortOption, setSortOption] =useState<string>('A-Z')
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const [favourites, setFavourites] = useFavourites()
 
 
@@ -140,25 +143,25 @@ export function Home() {
     });
   };
 
-
+  
   
   function toggleFilterCard() {
     setIsOpen(!isOpen);
   }
 
-
-  function handleFilterClick(genre:string){
-      setSelectedGenres([genre])
+  function handleSortChange(event: React.ChangeEvent<HTMLSelectElement>){
+	setSortOption(event.target.value)
   }
 
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>){
+	setSearchQuery(event.target.value)
+  }
+ 
   const filteredPodcasts = podcastsWithGenres.filter((podcast) =>{
     if(selectedGenres.length === 0 ) return true
     return selectedGenres.some((genre) => podcast.genre.includes(genre))
   })
 
-  function handleSortChange (event: React.ChangeEvent<HTMLSelectElement>) {
-    setSortOption(event.target.value)
-  }
 
   const sortedPodcasts = filteredPodcasts.sort((a, b) =>{
     switch(sortOption){
@@ -183,67 +186,29 @@ export function Home() {
 
   return (
     <>
-          {/*TOOLBAR=SEARCH-SORT-FILTER */}
-      <h1>Discover New Podcasts</h1>
-      <div className={styles.container}>
-        <input type="text" placeholder="Looking for something?" className={styles.searchInput} />
-        <button className={styles.searchBtn}>
-          <img src="assets/svgs/search.svg" alt="" className={styles.icon} />
-        </button>
-        <button className={styles.filterBtn} onClick={toggleFilterCard}>
-          <img src="assets/svgs/filter.svg" alt="" className={styles.icon} />
-        </button>
+       
+      <h1 className={styles.heading}>Discover New Podcasts</h1>
+	     {/*TOOLBAR=SEARCH-SORT-FILTER */}
+			<Toolbar
+			searchQuery={searchQuery}
+			onSearchChange={handleSearchChange}
+			sortOption={sortOption}
+			onSortChange={handleSortChange}
+			toggleFilterCard={toggleFilterCard}
+			genres={genres}
+			selectedGenres={selectedGenres}
+			setSelectedGenres={setSelectedGenres}
+			isFilterOpen={isOpen}
+			/>
 
-        <label htmlFor="sort"></label>
-        <select name="sort" id="sort" onChange={handleSortChange}>
-          <option value="A-Z"> A-Z</option>
-          <option value="Z-A">Z-A</option>
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-        </select>
-      </div>
-
-          {/*FILTER BUTTONS*/}
-      <div className={`${styles.filters} ${!isOpen ? styles.hidden : ''}`}>
-        {genres.length > 0 ? (
-          genres.map((genre) => (
-            <button key={genre.id} onClick={() => handleFilterClick(genre.title)}
-            className={selectedGenres.includes(genre.title) ? styles.selected : ''}>
-              {genre.title} 
-            </button>
-          ))
-        ) : (
-          <p>No genres available</p>
-        )}
-        <div>
-          <button className={styles.clearBtn} onClick={() => setSelectedGenres([])}>
-            clear
-          </button>
-        </div>
-      </div>
 
       {/*PODCAST CARD/LIST*/}
-      <ul className={styles.podcastList}>
-        {sortedPodcasts
-          .map((item) => {
-            const isFavourite = favourites.includes(item.id)
-            return (
-            <li key={item.id}>
-                <div className={styles.podcastList_item}>
-                    <img src={item.image} alt="" className={styles.image} />
-                    <h2>{item.title} | 
-                    	<button onClick={() => toggleFavourite(item.id)} 
-                        	className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}>
-                          	fav
-                        </button>
-                    </h2>
-                    <p>seasons {item.seasons}</p>
-                    <p>{item.genre}</p>
-                    <p>{formatDate(item.updated)}</p>
-                </div>
-            </li>
-          )})}
-      </ul>
+     <PodcastList
+	 	podcasts={sortedPodcasts}
+		favourites={favourites}
+		toggleFavourite={toggleFavourite}
+		formatDate={formatDate}
+	 />
     </>
   );
 }
