@@ -23,10 +23,10 @@ export const PodcastList: React.FC<PodcastListProps> = ({
               <h2>
                 {item.title} |
                 <button
-                  onClick={() => toggleFavourite(item.id)}
+                  onClick={() => toggleFavourite(item.id)} // Toggle on click
                   className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}
                 >
-                  fav
+                  {isFavourite ? "Unfav" : "Fav"} {/* Dynamic button text */}
                 </button>
               </h2>
               <p>seasons {item.seasons}</p>
