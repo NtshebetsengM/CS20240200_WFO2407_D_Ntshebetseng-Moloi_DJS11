@@ -1,0 +1,76 @@
+*{
+    box-sizing: border-box;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+.container{
+    margin: 2rem;
+}
+
+.show_info{
+    border:2px dotted var(--accent);
+}
+
+.show_info img{
+    display: block;
+    margin: 0 auto;
+    max-width: 10rem;
+    border-radius: 10px;
+    border: 0.2rem solid var(--accent);
+
+}
+
+.descriptions{
+    display: block;
+
+}
+.seasonsContainer{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        padding: 1rem;
+        margin: 1rem;
+        border-bottom: 2px solid var(--primary);
+        gap: 1rem;
+}
+.seasonBtn{
+    flex: 1 1 100px;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 200ms ease-in;
+}
+
+.seasonBtn:hover{
+    cursor: pointer;
+    background-color: var(--accent);
+    color: white;
+}
+
+.clearBtn{
+    background-color: #aa0a0a;
+    flex: 1 1 100px;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 200ms ease-in;
+}
+
+.clearBtn:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.genres{
+    font-weight: bold;
+}
