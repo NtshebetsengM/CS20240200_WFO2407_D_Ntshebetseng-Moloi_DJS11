@@ -174,7 +174,10 @@ export function Home() {
     setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
     )
   }
-  
+  const handlePodcastClick = (podcastId: string) => {
+    console.log("Podcast clicked:", podcastId);
+    // Perform actions, e.g., navigate to a details page
+  };
 
   return (
     <>
@@ -200,6 +203,7 @@ export function Home() {
 		favourites={favourites}
 		toggleFavourite={toggleFavourite}
 		formatDate={formatDate}
+    onclick={handlePodcastClick}
 	 />
     </>
   );

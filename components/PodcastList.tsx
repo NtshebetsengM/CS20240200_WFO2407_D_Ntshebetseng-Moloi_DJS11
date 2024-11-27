@@ -4,6 +4,7 @@
 import React from 'react';
 import styles from '../styles/Home.module.css';
 import {  PodcastListProps } from './interfaces/types'
+import { useNavigate } from 'react-router-dom';
 
 
 export const PodcastList: React.FC<PodcastListProps> = ({
@@ -12,13 +13,19 @@ export const PodcastList: React.FC<PodcastListProps> = ({
   toggleFavourite,
   formatDate,
 }) => {
+
+  const navigate = useNavigate()
+
+  const handlePodcastClick = (id: string)=>{
+    navigate(`/season/${id}`)
+  }
   return (
     <ul className={styles.podcastList}>
       {podcasts.map((item) => {
         const isFavourite = favourites.includes(item.id);
         return (
           <li key={item.id}>
-            <div className={styles.podcastList_item}>
+            <div className={styles.podcastList_item} onClick={()=> handlePodcastClick(item.id)}>
               <img src={item.image} alt="" className={styles.image} />
               <h2>
                 {item.title} |
@@ -29,7 +36,7 @@ export const PodcastList: React.FC<PodcastListProps> = ({
                   {isFavourite ? "Unfav" : "Fav"} {/* Dynamic button text */}
                 </button>
               </h2>
-              <p>seasons {item.seasons}</p>
+              <p>{item.seasons} season{item.seasons > 1 ? "s" : ""}</p>
               <p>{item.genre}</p>
               <p>{formatDate(item.updated)}</p>
             </div>

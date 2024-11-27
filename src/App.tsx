@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="podcast" element={<ShowDetail />} />
-          <Route path="season" element={<SeasonDetail />} />
+          <Route path="season/:id" element={<SeasonDetail />} />
           <Route path="episode" element={<EpisodeDetail />} />
           <Route path="favourites" element={<Favourites />} />
           <Route path="*" element={<NotFound/>} />

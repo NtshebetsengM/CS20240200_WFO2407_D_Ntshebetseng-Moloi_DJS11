@@ -1,11 +1,14 @@
 //@ts-check
 import { useEffect, useState } from "react";
+import { Link,useParams } from "react-router-dom";
 import { Episode, Season } from "components/interfaces/types";
 import styles from "../styles/SeasonDetail.module.css"
 
 
 export function SeasonDetail() {
- const showApiUrl = `https://podcast-api.netlify.app/id/10716/`
+
+  const { id } = useParams()
+ const showApiUrl = `https://podcast-api.netlify.app/id/${id}/`
 
 
 const [ loading, setLoading] = useState(true)
@@ -79,9 +82,10 @@ const formattedDate = formatDate(updated)
   
  return (
   <div className={styles.container} >
+    <Link to="/" >back</Link>
      <header>
         <h1>{title}</h1>
-        <h2> {seasons.length} seasons! </h2>
+        <h2> {seasons.length} season{seasons.length > 1 ? "s!" : "!"} </h2>
 
         <div >
             <h3>last updated: {formattedDate}</h3>
