@@ -5,6 +5,7 @@ import { ShowDetail } from "../pages/ShowDetail"
 import {SeasonDetail } from "../pages/SeasonDetail"
 import { EpisodeDetail } from "../pages/EpisodeDetail"
 import { Favourites } from "../pages/Favourites"
+import  NotFound  from "../pages/NotFound"
 // import { Reset } from "../components/Reset"
 // import { AudioPlayer } from "../components/AudioPlayer"
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="season" element={<SeasonDetail />} />
           <Route path="episode" element={<EpisodeDetail />} />
           <Route path="favourites" element={<Favourites />} />
+          <Route path="*" element={<NotFound/>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 footer{
     background-color: var(--secondary);
-    bottom: 0;
+    bottom: 0vh;
     width: 100%;
     text-align: center;
     color: gray;
