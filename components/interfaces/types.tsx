@@ -15,3 +15,17 @@ export interface Podcast {
     toggleFavourite: (id: string) => void;
     formatDate: (dateString: string) => string;
   } 
+
+  export interface Episode{
+    title:string;
+    description: string;
+    episode: number;
+    file: string;
+  }
+
+  export interface Season {
+    season: number;
+    title: string;
+    image: string;
+    episodes: Episode[]
+  }
