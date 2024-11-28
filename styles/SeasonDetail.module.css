@@ -36,15 +36,18 @@ h1{
 
 .show_info img{
     display: block;
-    margin: 0 auto;
-    max-width: 100%;
+    margin: 2rem auto;
+    max-width: 10rem;
     border-radius: 10px;
     border: 0.2rem solid var(--accent);
+    
 
 }
 
 .descriptions{
     display: block;
+    font-size: 1.3rem;
+    line-height: 2rem;
 
 }
 .seasonsContainer{
@@ -92,4 +95,54 @@ h1{
 
 .genres{
     font-weight: bold;
+}
+
+/*MEDIUM SCREENS*/
+
+@media (min-width:600px){
+    
+    h1{
+        font-size: 4rem;
+    }
+    .show_info img{
+        max-width: 20rem;
+       
+        
+    }
+    .descriptions{
+        
+        font-size: 1.5rem;
+        line-height: 2rem;
+    
+    }
+ 
+}
+
+/*largish*/
+@media (min-width:1000px){
+    .show_info img{  
+        max-width: 22rem;
+    }
+    .descriptions{
+      
+        font-size: 1.7rem;
+        line-height: 2.5rem;
+    
+    }
+}
+
+/*LARGE SCREENS*/
+
+@media (min-width:1700px){
+    h1{
+        font-size: 6rem;
+    }
+    .descriptions{
+        font-size: 1.9rem;
+        line-height: 2.7rem;
+    
+    }
+    .show_info img{  
+        max-width: 30rem;
+    }
 }

@@ -54,7 +54,7 @@
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 200ms linear;
     border: none;
-    cursor: pointer;
+    
 }
 
 .podcastList_item:hover{
@@ -67,6 +67,7 @@
 	display: block;
 	margin: 1rem auto;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 
