@@ -1,24 +1,32 @@
 *{
     box-sizing: border-box;
     
+    
 }
 
 .hidden{
     display: none;
 }
 
+h1{
+    
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--accent);
+}
+
 .container{
     margin: 2rem;
+    color: var(--accent);
 }
 
 .show_info{
-    border:2px dotted var(--accent);
+    padding: 2rem;
 }
 
 .show_info img{
     display: block;
     margin: 0 auto;
-    max-width: 10rem;
+    max-width: 100%;
     border-radius: 10px;
     border: 0.2rem solid var(--accent);
 

@@ -25,8 +25,8 @@ export const PodcastList: React.FC<PodcastListProps> = ({
         const isFavourite = favourites.includes(item.id);
         return (
           <li key={item.id}>
-            <div className={styles.podcastList_item} onClick={()=> handlePodcastClick(item.id)}>
-              <img src={item.image} alt="" className={styles.image} />
+            <div className={styles.podcastList_item} >
+              <img src={item.image} alt="" className={styles.image} onClick={()=> handlePodcastClick(item.id)} />
               <h2>
                 {item.title} |
                 <button

@@ -20,6 +20,7 @@ const [ loading, setLoading] = useState(true)
  const [ seasons, setSeason] = useState<Season[]>([])
  const [ episode, setEpisode ] = useState<Episode[]>([])
  const [ updated, setUpdated ] = useState<string>('')
+ const [ selectedSeason, setSelectedSeason ] = useState<number | null>(null)
 
 
  useEffect(() => {
@@ -59,6 +60,7 @@ useEffect(() => {
     // Access episodes of the first season, for example
   console.error('fetching failed') // Access episodes for the first season
   }
+  console.log(seasons)
 }, [episode, seasons, show])
 
 if (loading) {
@@ -77,8 +79,14 @@ const formatDate = (dateString: string) => {
 
 const formattedDate = formatDate(updated)
 
+function handleSeasonBtnClick(season:Season){
+  setSelectedSeason(season.season)
+  console.log(season.season)
+}
 
-
+function handleClearBtnClick(){
+  setSelectedSeason(null)
+}
   
  return (
   <div className={styles.container} >
@@ -97,16 +105,18 @@ const formattedDate = formatDate(updated)
                     <p className={styles.genres}>{genres} </p>
                 </div>
             </div>
+            {/*SEASONS BUTTONS*/}
             <div className={styles.seasonsContainer} >
                 {seasons.length > 0 ? (
                         seasons.map(season => (
-                          <button key={season.season} className={styles.seasonBtn} >
+                          <button key={season.season} className={styles.seasonBtn} onClick={() =>handleSeasonBtnClick(season)}>
                             {season.title}
                           </button>
                         ))
                       ) : (<p>No seasons available</p>)}
                       <div>
-                        <button className={styles.clearBtn} >
+                        <button className={styles.clearBtn}
+                        onClick={ handleClearBtnClick} >
                           Clear
                         </button>
                       </div>
@@ -116,17 +126,19 @@ const formattedDate = formatDate(updated)
       </header>
 
       <div>
-          <div className={styles.hidden}>
-              {seasons.length > 0 && seasons.map((season: Season, index: number) => (
-                    <div key={index}>
+          <div >
+            {/*SEASONS AND EPISODES */}
+              {seasons.length > 0 && seasons.filter((season) =>selectedSeason === null ? true : season.season === selectedSeason)
+              .map((season: Season) => (
+                    <div key={season.season}>
                       <h2>{season.title}</h2>
                       <div>
                         {season.episodes && season.episodes.map((episode: Episode, idx: number) => (
                           <div key={idx}>
-                            <img src={season.image} width="100px" alt="" />
+                           
                             <h3>{episode.title}</h3>
                             <p>{episode.description}</p>
-                            
+                            <hr />
                           </div>
                         ))}
                       </div>
