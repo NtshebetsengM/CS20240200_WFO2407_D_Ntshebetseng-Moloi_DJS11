@@ -1,11 +1,12 @@
 //@ts-check
+import { Podcast } from "components/interfaces/types";
 import React, { useEffect, useState } from "react";
+import { Loading } from "../components/Loading";
+import { PodcastList } from "../components/PodcastList";
+import { Toolbar } from "../components/Toolbar";
 import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/Home.module.css";
-import { Toolbar } from "../components/Toolbar"
-import { PodcastList } from "../components/PodcastList"
-import { Podcast } from "components/interfaces/types";
-
+import { ErrorDisplay } from "../components/ErrorDisplay";
 
 
 export function Home() {
@@ -120,10 +121,10 @@ export function Home() {
  
 
   if (loading) {
-    return <h1 className={styles.heading}>Loading...</h1>;
+    return <Loading/>;
   }
   if (error) {
-    return <h1>Something went wrong</h1>;
+    return <ErrorDisplay/>;
   }
  
   const formatDate = (dateString: string) => {
@@ -174,11 +175,7 @@ export function Home() {
     setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
     )
   }
-  const handlePodcastClick = (podcastId: string) => {
-    console.log("Podcast clicked:", podcastId);
-    // Perform actions, e.g., navigate to a details page
-  };
-
+ 
   return (
     <>
        
@@ -203,7 +200,7 @@ export function Home() {
 		favourites={favourites}
 		toggleFavourite={toggleFavourite}
 		formatDate={formatDate}
-    onclick={handlePodcastClick}
+
 	 />
     </>
   );

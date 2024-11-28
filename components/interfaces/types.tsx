@@ -14,7 +14,6 @@ export interface Podcast {
     favourites: string[];
     toggleFavourite: (id: string) => void;
     formatDate: (dateString: string) => string;
-    onclick: (podcastID:string) => void;
   } 
 
   export interface Episode{

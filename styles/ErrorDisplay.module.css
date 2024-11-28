@@ -1,0 +1,109 @@
+*{
+    --background: rgb(244, 240, 242);
+    --cadet-gray: rgb(57, 66, 77);
+	--accent: rgb(51, 127, 154);
+	--secondary: rgb(243, 209, 225);
+	--primary: rgb(239, 149, 191);
+}
+
+.heading{
+    text-align: center;
+    padding: 1rem;
+    margin: 3rem;
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 2rem;
+
+}
+
+.container{
+    display: block;
+    margin: 0 auto;
+  }
+  
+.navsContainer{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 2rem;
+          font-size: 1.7rem;
+          margin-bottom:3rem ;
+      
+}
+.goBack{
+      background-color: var(--accent);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: all 200ms ease-in;
+      border: none;
+}
+.goBack:hover{
+      cursor: pointer;
+      color: var(--accent);
+      background-color: var(--secondary)
+}    
+
+/*MEDIUM SCREENS*/
+
+@media (min-width:600px){
+  
+    .heading{
+        
+        font-size: 3rem;
+    
+    }
+    .navsContainer{
+        
+        gap: 3rem;
+        font-size: 2.7rem;
+        margin-bottom:3rem ;  
+}
+.goBack{
+   
+    padding: 1rem 1.5rem;
+    font-size:1.4rem ;
+}
+}
+
+/*largish*/
+@media (min-width:1000px){
+    .heading{
+        
+        font-size: 4rem;
+    
+    }
+    .navsContainer{
+        
+        gap: 4rem;
+        font-size: 2.7rem;
+        margin-bottom:4rem ;
+    
+    }
+    .goBack{
+    
+        padding: 1rem 1.5rem;
+        font-size:2rem ;
+    }
+}
+/*LARGE SCREENS*/
+
+@media (min-width:1700px){
+    .heading{
+        font-size: 5rem;
+        padding: 8rem 0rem;
+    }
+    .navsContainer{
+        
+        gap: 4rem;
+        font-size: 2.7rem;
+        margin:4rem 0rem ;
+    
+}
+.goBack{
+   
+    padding: 1rem 1.5rem;
+    font-size:2rem ;
+}
+}

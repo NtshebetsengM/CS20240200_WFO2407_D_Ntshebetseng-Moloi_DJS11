@@ -1,10 +1,11 @@
 //@ts-check
-import { useEffect, useState } from "react";
-import { Link,useParams } from "react-router-dom";
 import { Episode, Season } from "components/interfaces/types";
-import styles from "../styles/SeasonDetail.module.css"
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Loading } from "../components/Loading";
 import { useFavourites } from "../custom-hooks/useFavourite";
-
+import styles from "../styles/SeasonDetail.module.css";
+import { ErrorDisplay } from "../components/ErrorDisplay"
 
 export function SeasonDetail() {
 
@@ -13,6 +14,7 @@ export function SeasonDetail() {
 
 
 const [ loading, setLoading] = useState(true)
+const [ error, setError ] = useState<string | null>(null)
  const [ show, setShow ] = useState<string[]>([])
  const [ title, setTitle ] = useState<string>()
  const [ description, setDescription ] = useState<string>('')
@@ -45,12 +47,14 @@ const [ loading, setLoading] = useState(true)
         setEpisode(data.seasons.episodes)
         setLoading(false)
       } else {
+        
         console.error('no seasons data available')
       }
       
 
     })
     .catch((error) => {
+      setError(error.message)
       console.error('failed to fetch data', error)
       setLoading(false)
     });
@@ -65,8 +69,13 @@ useEffect(() => {
 }, [episode, seasons, show])
 
 if (loading) {
-  return <h1 className={styles.heading}>Loading...</h1>;
+  return <Loading/>;
 }
+
+if (error) {
+  return <ErrorDisplay/>
+}
+
 
 
 const formatDate = (dateString: string) => {

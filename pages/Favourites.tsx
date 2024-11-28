@@ -1,9 +1,12 @@
 //@ts-check
-import { useState, useEffect } from "react"
 import { Podcast } from "components/interfaces/types"
+import { useEffect, useState } from "react"
+import { Loading } from "../components/Loading"
+import { ErrorDisplay } from "../components/ErrorDisplay"
 import { PodcastList } from "../components/PodcastList"
 import { Toolbar } from "../components/Toolbar"
 import styles from "../styles/Home.module.css"
+
 
 export function Favourites() {
 
@@ -82,11 +85,11 @@ export function Favourites() {
     }
   });
 
-      if (loading) {
-        return <h1 className={styles.heading} >Loading...</h1>;
-      }
+  if (loading) {
+    return <Loading/>;
+  }
       if (error) {
-        return <h1>Something went wrong</h1>;
+        return <ErrorDisplay/>
       }
 
     return (
