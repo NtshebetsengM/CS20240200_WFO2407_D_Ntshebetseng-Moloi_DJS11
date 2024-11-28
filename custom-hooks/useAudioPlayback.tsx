@@ -11,7 +11,12 @@ export function useAudioPlayback(initialAudio: { file: string; title: string } |
   useEffect(() => {
     if (currentAudio) {
       const storedTime = localStorage.getItem(`time-${currentAudio.title}`);
-      setCurrentTime(storedTime ? Number(storedTime) : 0);
+      // If the current audio is different from the previously played one, reset the time to 0
+      if (storedTime) {
+        setCurrentTime(Number(storedTime)); // Set to stored time
+      } else {
+        setCurrentTime(0); // Default to 0 if no stored time exists
+      }
     }
   }, [currentAudio]);
 
@@ -22,26 +27,33 @@ export function useAudioPlayback(initialAudio: { file: string; title: string } |
   }, [currentTime]);
 
   const handlePlayPause = () => {
-    if (!audioRef.current) return;
+
+    if (!audioRef.current || !currentAudio) return;
+
     if (isPlaying) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
     }
-    setIsPlaying(!isPlaying);
+    setIsPlaying(prev => !prev);
   };
 
+
   const handleTimeUpdate = () => {
+    
     if (!audioRef.current || !currentAudio) return;
+
     const newTime = audioRef.current.currentTime;
     setCurrentTime(newTime);
     localStorage.setItem(`time-${currentAudio.title}`, newTime.toString());
+    console.log("time set")
   };
 
   const updateAudio = (file: string, title: string) => {
     setCurrentAudio({ file, title });
     localStorage.setItem("currentAudio", JSON.stringify({ file, title }));
     setIsPlaying(false); // Stop previous playback
+    
   };
 
   return {

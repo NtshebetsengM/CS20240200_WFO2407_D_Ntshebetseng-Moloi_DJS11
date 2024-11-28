@@ -24,10 +24,10 @@ export function SeasonDetail() {
   const [updated, setUpdated] = useState<string>("");
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
   const [favourites, setFavourites] = useFavourites(); // Hook for managing favorites
+  const [currentAudio, setCurrentAudio] = useState<{ file: string; title: string } | null>(null)
 
   const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
   const {
-    currentAudio,
     updateAudio,
     isPlaying,
     audioRef,
@@ -82,6 +82,12 @@ export function SeasonDetail() {
 
   const formattedDate = formatDate(updated);
 
+  function handleAudioUpdate(file:string, title:string){
+    setCurrentAudio({file, title})
+    localStorage.setItem("currentAudio", JSON.stringify({file, title}))
+    console.log(file)
+  }
+
   if (loading) return <Loading />;
   if (error) return <ErrorDisplay />;
 
@@ -128,7 +134,7 @@ export function SeasonDetail() {
       <EpisodesDetail
         seasons={seasons}
         selectedSeason={selectedSeason}
-        updateAudio={updateAudio}
+        updateAudio={handleAudioUpdate}
       />
       <AudioPlayer
         currentAudio={currentAudio}

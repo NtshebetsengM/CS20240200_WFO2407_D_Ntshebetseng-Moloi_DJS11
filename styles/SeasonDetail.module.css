@@ -8,11 +8,18 @@
     display: none;
 }
 
+
 h1{
     
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--accent);
 }
+h2{
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--primary);
+}
+
 .favBtn{
     border: none;
     margin-left: 0.5rem;

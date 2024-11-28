@@ -12,11 +12,18 @@
     color:var(--accent) ;
 }
 
-.audioControls{
-    position: "fixed";
-    bottom: "0";
-    width: "100%";
-    background: "#f9f9f9";
-    padding: "1rem";
-    box-shadow: "0 -2px 5px rgba(0,0,0,0.1)";
+.audioControls {
+    display: flex;
+    gap: 2rem;
+    position: fixed;
+    bottom: 0; /* Start off-screen */
+    width: 50%;
+    background: var(--secondary);
+    padding: 1rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    transition: bottom 0.3s ease; /* Smooth transition for sliding up */
+  }
+  
+  .closebtn{
+    display: none;
   }

@@ -1,4 +1,5 @@
-import { Season } from "../components/interfaces/types";
+import { Season,Episode } from "../components/interfaces/types";
+
 
 interface EpisodesListProps {
   seasons: Season[];
@@ -7,25 +8,32 @@ interface EpisodesListProps {
 }
 
 export function EpisodesDetail({ seasons, selectedSeason, updateAudio }: EpisodesListProps){
+  
+  const handleEpisodeSelect = (episode: Episode) => {
+    
+    updateAudio(episode.file, episode.title);
+  };
   return (
-  <div>
-    {seasons
-      .filter((season) => selectedSeason === null || season.season === selectedSeason)
-      .map((season) => (
-        <div key={season.season}>
-          <h2>{season.title}</h2>
-          {season.episodes.map((episode, idx) => (
-            <div key={idx}>
-              <h3>
-                {episode.title}{" "}
-                <button onClick={() => updateAudio(episode.file, episode.title)}>Play</button>
-              </h3>
-              <p>{episode.description}</p>
-              <hr />
-            </div>
-          ))}
-        </div>
-      ))}
-  </div>
-);
+    <div>
+      {seasons
+        .filter((season) => selectedSeason === null || season.season === selectedSeason)
+        .map((season: Season) => (
+          <div key={season.season}>
+            <h2>{season.title}</h2>
+            {season.episodes.map((episode) => (
+              <div key={episode.episode}>
+                <h3>
+                  {episode.title}{" "}
+                  <button onClick={() => {
+                    handleEpisodeSelect(episode)
+                    console.log(" play clicked")}}>Play</button>
+                </h3>
+                <p>{episode.description}</p>
+                <hr />
+              </div>
+            ))}
+          </div>
+        ))}
+    </div>
+  );
 }
