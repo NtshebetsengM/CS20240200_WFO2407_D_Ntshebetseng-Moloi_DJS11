@@ -1,0 +1,22 @@
+
+*{
+    --background: rgb(244, 240, 242);
+    --cadet-gray: rgb(57, 66, 77);
+	--accent: rgb(51, 127, 154);
+	--secondary: rgb(243, 209, 225);
+	--primary: rgb(239, 149, 191);
+}
+
+
+.header{
+    color:var(--accent) ;
+}
+
+.audioControls{
+    position: "fixed";
+    bottom: "0";
+    width: "100%";
+    background: "#f9f9f9";
+    padding: "1rem";
+    box-shadow: "0 -2px 5px rgba(0,0,0,0.1)";
+  }
