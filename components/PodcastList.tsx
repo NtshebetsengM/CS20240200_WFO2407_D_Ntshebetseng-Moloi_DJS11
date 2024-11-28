@@ -22,7 +22,6 @@ export const PodcastList: React.FC<PodcastListProps> = ({
   return (
     <ul className={styles.podcastList}>
       {podcasts.map((item) => {
-        const isFavourite = favourites.includes(item.id);
         return (
           <li key={item.id}>
             <div className={styles.podcastList_item} >
@@ -31,9 +30,9 @@ export const PodcastList: React.FC<PodcastListProps> = ({
                 {item.title} |
                 <button
                   onClick={() => toggleFavourite(item.id)} // Toggle on click
-                  className={`${styles.favBtn} ${isFavourite ? styles.favourite : ''}`}
+                  className={`${styles.favBtn} ${favourites.includes(item.id) ? styles.favourite : ''}`}
                 >
-                  {isFavourite ? "Unfav" : "Fav"} {/* Dynamic button text */}
+                  {favourites.includes(item.id) ? "Unfav" : "Fav"} {/* Dynamic button text */}
                 </button>
               </h2>
               <p>{item.seasons} season{item.seasons > 1 ? "s" : ""}</p>

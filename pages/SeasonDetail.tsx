@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { Link,useParams } from "react-router-dom";
 import { Episode, Season } from "components/interfaces/types";
 import styles from "../styles/SeasonDetail.module.css"
+import { useFavourites } from "../custom-hooks/useFavourite";
 
 
 export function SeasonDetail() {
 
-  const { id } = useParams()
+  const { id } = useParams<string>()
  const showApiUrl = `https://podcast-api.netlify.app/id/${id}/`
 
 
@@ -21,7 +22,7 @@ const [ loading, setLoading] = useState(true)
  const [ episode, setEpisode ] = useState<Episode[]>([])
  const [ updated, setUpdated ] = useState<string>('')
  const [ selectedSeason, setSelectedSeason ] = useState<number | null>(null)
-
+ const [favourites, setFavourites] = useFavourites()
 
  useEffect(() => {
   fetch(showApiUrl)
@@ -60,7 +61,7 @@ useEffect(() => {
     // Access episodes of the first season, for example
   console.error('fetching failed') // Access episodes for the first season
   }
-  console.log(seasons)
+  console.log(show)
 }, [episode, seasons, show])
 
 if (loading) {
@@ -81,18 +82,27 @@ const formattedDate = formatDate(updated)
 
 function handleSeasonBtnClick(season:Season){
   setSelectedSeason(season.season)
-  console.log(season.season)
 }
 
 function handleClearBtnClick(){
   setSelectedSeason(null)
+}
+function toggleFavourite(id:string){
+  setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
+  )
 }
   
  return (
   <div className={styles.container} >
     <Link to="/" >back</Link>
      <header>
+      
         <h1>{title}</h1>
+        <button onClick={() => id && toggleFavourite(id)}
+            className={`${styles.favBtn} ${favourites ? styles.favourite : ''}`}
+          >
+          {favourites.includes(id || "") ? "Unfav" : "Fav"}
+          </button>
         <h2> {seasons.length} season{seasons.length > 1 ? "s!" : "!"} </h2>
 
         <div >
