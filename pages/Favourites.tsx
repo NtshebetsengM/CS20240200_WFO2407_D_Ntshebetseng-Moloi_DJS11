@@ -107,6 +107,15 @@ export function Favourites() {
         setSelectedGenres={setSelectedGenres}
         isFilterOpen={isOpen}
       />
+
+      <button
+        onClick={() => {
+          localStorage.setItem('favourites', JSON.stringify([])); // Reset in localStorage
+          setFavourites([]); // Reset in state to update the UI
+        }}
+      >
+        Reset Favourites
+      </button>
         {favourites.length === 0 ? (
         <p>No favourites yet!</p>
       ) : (

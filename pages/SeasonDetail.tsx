@@ -3,7 +3,6 @@ import {  Season } from "components/interfaces/types";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
-import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/SeasonDetail.module.css";
 import { ErrorDisplay } from "../components/ErrorDisplay"
 import { AudioPlayer } from "../components/AudioPlayer";
@@ -14,6 +13,7 @@ export function SeasonDetail() {
   const { id } = useParams<string>();
   const showApiUrl = `https://podcast-api.netlify.app/id/${id}/`;
 
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState<string>();
@@ -23,7 +23,6 @@ export function SeasonDetail() {
   const [seasons, setSeason] = useState<Season[]>([]);
   const [updated, setUpdated] = useState<string>("");
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
-  const [favourites, setFavourites] = useFavourites(); // Hook for managing favorites
   const [currentAudio, setCurrentAudio] = useState<{ file: string; title: string } | null>(null)
 
   const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
@@ -42,6 +41,7 @@ export function SeasonDetail() {
       })
       .then((data) => {
         if (data && data.seasons) {
+         
           setTitle(data.title);
           setDescription(data.description);
           setGenre(data.genres);
@@ -69,13 +69,7 @@ export function SeasonDetail() {
     });
   };
 
-  const toggleFavourite = (id: string) => {
-    setFavourites((prev) =>
-      prev.includes(id)
-        ? prev.filter((favId) => favId !== id) // Remove if already in favorites
-        : [...prev, id] // Add if not in favorites
-    );
-  };
+
 
   const formattedDate = formatDate(updated);
 
@@ -94,12 +88,7 @@ export function SeasonDetail() {
       <header>
         <h1>{title}</h1>
         {/* Favourites Button */}
-        <button
-          onClick={() => id && toggleFavourite(id)}
-          className={`${styles.favBtn} ${favourites.includes(id || "") ? styles.favourite : ""}`}
-        >
-          {favourites.includes(id || "") ? "Unfav" : "Fav"}
-        </button>
+        
         <h2>
           {seasons.length} season{seasons.length > 1 ? "s!" : "!"}
         </h2>
@@ -132,6 +121,7 @@ export function SeasonDetail() {
         seasons={seasons}
         selectedSeason={selectedSeason}
         updateAudio={handleAudioUpdate}
+        showTitle={title || ""}
       />
       <AudioPlayer
         currentAudio={currentAudio}
