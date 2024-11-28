@@ -12,6 +12,7 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio }: Episode
   const handleEpisodeSelect = (episode: Episode) => {
     
     updateAudio(episode.file, episode.title);
+    console.log("that the", episode.file,episode.title)
   };
   return (
     <div>
@@ -26,7 +27,7 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio }: Episode
                   {episode.title}{" "}
                   <button onClick={() => {
                     handleEpisodeSelect(episode)
-                    console.log(" play clicked")}}>Play</button>
+                    console.log(" play clicked", episode.title)}}>Play</button>
                 </h3>
                 <p>{episode.description}</p>
                 <hr />

@@ -28,10 +28,7 @@ export function SeasonDetail() {
 
   const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
   const {
-    updateAudio,
-    isPlaying,
     audioRef,
-    handlePlayPause,
     handleTimeUpdate,
   } = useAudioPlayback(storedAudio);
 
@@ -84,8 +81,8 @@ export function SeasonDetail() {
 
   function handleAudioUpdate(file:string, title:string){
     setCurrentAudio({file, title})
-    localStorage.setItem("currentAudio", JSON.stringify({file, title}))
-    console.log(file)
+   
+    console.log("this is",title,file)
   }
 
   if (loading) return <Loading />;
@@ -138,9 +135,7 @@ export function SeasonDetail() {
       />
       <AudioPlayer
         currentAudio={currentAudio}
-        isPlaying={isPlaying}
         audioRef={audioRef}
-        handlePlayPause={handlePlayPause}
         handleTimeUpdate={handleTimeUpdate}
       />
     </div>
