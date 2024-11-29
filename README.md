@@ -29,6 +29,7 @@
 - **API**: Fetches podcast data from a REST API
 - **FontAwesome**: For icons
 - **Netlify**: For deploying the app
+- **Realfavicongenerator.net**: For favicons
 
 ---
 
