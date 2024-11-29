@@ -1,18 +1,16 @@
-//@ts-check
-import {  Season } from "components/interfaces/types";
+import { Season } from "components/interfaces/types";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import styles from "../styles/SeasonDetail.module.css";
-import { ErrorDisplay } from "../components/ErrorDisplay"
+import { ErrorDisplay } from "../components/ErrorDisplay";
 import { AudioPlayer } from "../components/AudioPlayer";
 import { EpisodesDetail } from "./EpisodeDetail";
-import { useAudioPlayback } from "../custom-hooks/useAudioPlayback"
+import { useAudioPlayback } from "../custom-hooks/useAudioPlayback";
 
 export function SeasonDetail() {
   const { id } = useParams<string>();
   const showApiUrl = `https://podcast-api.netlify.app/id/${id}/`;
-
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,13 +21,13 @@ export function SeasonDetail() {
   const [seasons, setSeason] = useState<Season[]>([]);
   const [updated, setUpdated] = useState<string>("");
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
-  const [currentAudio, setCurrentAudio] = useState<{ file: string; title: string } | null>(null)
+  const [currentAudio, setCurrentAudio] = useState<{
+    file: string;
+    title: string;
+  } | null>(null);
 
   const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
-  const {
-    audioRef,
-    handleTimeUpdate,
-  } = useAudioPlayback(storedAudio);
+  const { audioRef, handleTimeUpdate } = useAudioPlayback(storedAudio);
 
   useEffect(() => {
     fetch(showApiUrl)
@@ -41,7 +39,6 @@ export function SeasonDetail() {
       })
       .then((data) => {
         if (data && data.seasons) {
-         
           setTitle(data.title);
           setDescription(data.description);
           setGenre(data.genres);
@@ -69,14 +66,11 @@ export function SeasonDetail() {
     });
   };
 
-
-
   const formattedDate = formatDate(updated);
 
-  function handleAudioUpdate(file:string, title:string){
-    setCurrentAudio({file, title})
-   
-    console.log("this is",title,file)
+  function handleAudioUpdate(file: string, title: string) {
+    setCurrentAudio({ file, title });
+    console.log("this is", title, file);
   }
 
   if (loading) return <Loading />;
@@ -87,8 +81,6 @@ export function SeasonDetail() {
       <Link to="/">back</Link>
       <header>
         <h1>{title}</h1>
-        {/* Favourites Button */}
-        
         <h2>
           {seasons.length} season{seasons.length > 1 ? "s!" : "!"}
         </h2>
@@ -111,7 +103,10 @@ export function SeasonDetail() {
                 {season.title}
               </button>
             ))}
-            <button className={styles.clearBtn} onClick={() => setSelectedSeason(null)}>
+            <button
+              className={styles.clearBtn}
+              onClick={() => setSelectedSeason(null)}
+            >
               Clear
             </button>
           </div>
@@ -127,6 +122,7 @@ export function SeasonDetail() {
         currentAudio={currentAudio}
         audioRef={audioRef}
         handleTimeUpdate={handleTimeUpdate}
+        onClose={() => setCurrentAudio(null)} // Close handler
       />
     </div>
   );

@@ -12,6 +12,7 @@ interface Favourite {
     useEffect(() => {
       const savedFavourites = JSON.parse(localStorage.getItem("favourites") || "[]");
       setFavourites(savedFavourites);
+      console.log(savedFavourites)
     }, []);
   
     useEffect(() => {

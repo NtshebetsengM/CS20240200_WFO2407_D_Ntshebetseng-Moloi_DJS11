@@ -17,7 +17,7 @@
     gap: 2rem;
     position: fixed;
     bottom: 0; /* Start off-screen */
-    width: 50%;
+    width: 80%;
     background: var(--secondary);
     padding: 1rem;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
