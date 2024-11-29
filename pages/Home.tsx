@@ -149,27 +149,36 @@ export function Home() {
 	setSearchQuery(event.target.value)
   }
  
-  const filteredPodcasts = podcastsWithGenres.filter((podcast) =>{
-    if(selectedGenres.length === 0 ) return true
-    return selectedGenres.some((genre) => podcast.genre.includes(genre))
-  })
+  const filterPodcasts = (podcasts: Podcast[]) => {
+    return podcasts.filter((podcast) => {
+      const matchesSearch = podcast.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            podcast.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesGenre = selectedGenres.length === 0 || selectedGenres.some((genre) => podcast.genre.includes(genre));
+      return matchesSearch && matchesGenre;
+    });
+  };
 
+  // Sort podcasts based on the selected option
+  const sortPodcasts = (podcasts: Podcast[]) => {
+    return podcasts.sort((a, b) => {
+      switch (sortOption) {
+        case 'A-Z':
+          return a.title.localeCompare(b.title);
+        case 'Z-A':
+          return b.title.localeCompare(a.title);
+        case 'Newest':
+          return new Date(b.updated).getTime() - new Date(a.updated).getTime();
+        case 'Oldest':
+          return new Date(a.updated).getTime() - new Date(b.updated).getTime();
+        default:
+          return 0;
+      }
+    });
+  };
 
-  const sortedPodcasts = filteredPodcasts.sort((a, b) =>{
-    switch(sortOption){
-      case 'A-Z':
-        return a.title.localeCompare(b.title)
-      case 'Z-A':
-        return b.title.localeCompare(a.title)
-      case 'Newest':
-        return new Date(b.updated).getTime() - new Date(a.updated).getTime()
-      case 'Oldest':
-        return new Date(a.updated).getTime() - new Date(b.updated).getTime()
-      default:
-        return 0
-    }
-  })
-
+  // Combine filter and sort
+  const filteredPodcasts = filterPodcasts(podcastsWithGenres);
+  const sortedPodcasts = sortPodcasts(filteredPodcasts);
  
   return (
     <>

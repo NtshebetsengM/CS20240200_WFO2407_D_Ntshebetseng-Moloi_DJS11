@@ -28,6 +28,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     const handleFilterClick = (genre:string) => {
         setSelectedGenres((prev) => prev.includes(genre) ? [] : [genre])
     }
+
+
+
     return (
         <div>
         {/* Search, Sort, Filter Toolbar */}
