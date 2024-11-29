@@ -26,9 +26,25 @@ h2{
     border-radius: 50%;
     cursor: pointer;
     color: #aa0a0a;
+    
 }
 .favourite{
     background-color: var(--primary);
+    border: none;
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+   color: white;
+}
+.playBtn{
+    background-color: var(--secondary);
+    border: none;
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--accent);
 }
 
 .container{

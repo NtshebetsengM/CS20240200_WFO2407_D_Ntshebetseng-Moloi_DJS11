@@ -71,8 +71,8 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
                           fav.episodeTitle === episode.title &&
                           fav.showTitle === showTitle
                       )
-                        ? styles.favourite
-                        : ""
+                        ? styles.favBtn
+                        : styles.favourite
                     }
                   >
                     {favourites.some(
@@ -88,6 +88,7 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
                       handleEpisodeSelect(episode);
                       console.log("Play clicked", episode.title);
                     }}
+                    className={styles.playBtn}
                   >
                     Play
                   </button>
