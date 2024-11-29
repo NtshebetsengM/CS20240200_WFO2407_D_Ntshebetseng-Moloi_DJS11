@@ -1,6 +1,8 @@
+import { ErrorDisplay } from "../components/ErrorDisplay";
 import { Season, Episode } from "../components/interfaces/types";
-import { useFavourites } from "../custom-hooks/useFavourite";
+import { useFavourite } from "../custom-hooks/useFavourite";
 import styles from "../styles/SeasonDetail.module.css";
+import { Loading } from "../components/Loading"; // Make sure the import path is correct
 
 interface EpisodesListProps {
   seasons: Season[];
@@ -10,7 +12,7 @@ interface EpisodesListProps {
 }
 
 export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle }: EpisodesListProps) {
-  const [favourites, setFavourites] = useFavourites(); // Hook for managing favorites
+  const { favourites, addFavourite, removeFavourite, loading, error } = useFavourite(); // Hook for managing favorites
 
   const handleEpisodeSelect = (episode: Episode) => {
     updateAudio(episode.file, episode.title);
@@ -22,24 +24,32 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
       episodeTitle: episode.title,
       showTitle: showTitle,
     };
-  
-    setFavourites((prev) => {
-      const exists = prev.some(
-        (fav) =>
-          fav.episodeTitle === favouriteItem.episodeTitle &&
-          fav.showTitle === favouriteItem.showTitle
-      );
-  
-      return exists
-        ? prev.filter(
-            (fav) =>
-              fav.episodeTitle !== favouriteItem.episodeTitle ||
-              fav.showTitle !== favouriteItem.showTitle
-          )
-        : [...prev, favouriteItem];
-    });
+
+    // Check if the episode is already a favourite
+    const exists = favourites.some(
+      (fav) =>
+        fav.episodeTitle === favouriteItem.episodeTitle &&
+        fav.showTitle === favouriteItem.showTitle
+    );
+
+    // If it exists (it's already a favourite), remove it
+    if (exists) {
+      // Remove it from favourites
+      removeFavourite(favouriteItem.episodeTitle, favouriteItem.showTitle);
+    } else {
+      // If not, add it to favourites
+      addFavourite(favouriteItem.episodeTitle, favouriteItem.showTitle);
+    }
   };
-  
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  // Display error message if there is an error
+  if (error) {
+    return <ErrorDisplay />;
+  }
 
   return (
     <div>

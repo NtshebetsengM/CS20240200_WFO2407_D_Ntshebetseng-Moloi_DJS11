@@ -7,9 +7,8 @@ import styles from "../styles/favourites.module.css";
 import { Link } from "react-router-dom";
 
 export function Favourites() {
-  const { favourites, removeFavourite, resetFavourites } = useFavourite(); // Use the custom hook
-  const [loading, setLoading] = useState(false); // Manage loading state
-  const [error, setError] = useState<string | null>(null);
+  const { favourites, removeFavourite, resetFavourites, loading, error } = useFavourite(); // Use the custom hook
+
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("A-Z");
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Loading } from "../components/Loading";
 import { PodcastList } from "../components/PodcastList";
 import { Toolbar } from "../components/Toolbar";
-import { useFavourites } from "../custom-hooks/useFavourite";
 import styles from "../styles/Home.module.css";
 import { ErrorDisplay } from "../components/ErrorDisplay";
 
@@ -22,7 +21,7 @@ export function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([])
   const [sortOption, setSortOption] =useState<string>('A-Z')
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [favourites, setFavourites] = useFavourites()
+ 
 
 
   // FETCH PODCASTS
@@ -171,10 +170,6 @@ export function Home() {
     }
   })
 
-  function toggleFavourite(id:string){
-    setFavourites((prev)=> prev.includes(id) ? prev.filter((favId) => favId !== id ) : [...prev, id]
-    )
-  }
  
   return (
     <>
@@ -196,11 +191,8 @@ export function Home() {
 
       {/*PODCAST CARD/LIST*/}
      <PodcastList
-	 	podcasts={sortedPodcasts}
-		favourites={favourites}
-		toggleFavourite={toggleFavourite}
-		formatDate={formatDate}
-
+        podcasts={sortedPodcasts}
+        formatDate={formatDate}
 	 />
     </>
   );

@@ -28,6 +28,7 @@
     -2px -2px 0px grey,
     2px -2px 0px grey,
     -2px 2px 0px grey;
+    background-color: transparent;
 }
 .hamburgerIcon{
     padding-right: 1rem;

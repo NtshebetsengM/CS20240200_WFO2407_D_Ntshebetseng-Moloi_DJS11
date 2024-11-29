@@ -11,8 +11,6 @@ export interface Podcast {
   
   export interface PodcastListProps {
     podcasts: Podcast[];
-    favourites: string[];
-    toggleFavourite: (id: string) => void;
     formatDate: (dateString: string) => string;
   } 
 
