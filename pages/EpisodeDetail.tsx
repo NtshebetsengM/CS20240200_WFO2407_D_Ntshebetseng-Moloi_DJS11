@@ -57,7 +57,8 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
         .filter((season) => selectedSeason === null || season.season === selectedSeason)
         .map((season: Season) => (
           <div key={season.season}>
-            <h2>{season.title}</h2>
+            <h2>{season.title} | {season.episodes.length} episodes</h2>
+            <img src={season.image} alt=""  className={styles.seasonImg} />
             {season.episodes.map((episode) => (
               <div key={episode.episode}>
                 <h3>

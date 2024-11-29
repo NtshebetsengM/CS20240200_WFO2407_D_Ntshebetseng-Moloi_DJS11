@@ -43,11 +43,17 @@ h2{
 .show_info img{
     display: block;
     margin: 2rem auto;
-    max-width: 10rem;
+    max-width: 14rem;
     border-radius: 10px;
     border: 0.2rem solid var(--accent);
     
 
+}
+.seasonImg{
+    
+    max-width: 12rem;
+    border-radius: 10px;
+    border: 0.2rem solid var(--accent);
 }
 
 .descriptions{
