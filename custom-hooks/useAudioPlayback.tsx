@@ -12,7 +12,6 @@ export function useAudioPlayback(initialAudio: { file: string; title: string } |
   useEffect(() => {
     const storedPreviousAudios = JSON.parse(localStorage.getItem("previousAudios") || "[]");
     setPreviousAudios(storedPreviousAudios);
-    console.log("line 16 title", storedPreviousAudios)
   }, []);
 
   useEffect(() => {
@@ -25,8 +24,6 @@ export function useAudioPlayback(initialAudio: { file: string; title: string } |
         setCurrentTime(0); // Default to 0 if no stored time exists
       }
     }
-    console.log("current audio", currentAudio)
-    console.log("stored time", currentTime)
   }, [currentAudio, currentTime]);
 
 useEffect(()=>{

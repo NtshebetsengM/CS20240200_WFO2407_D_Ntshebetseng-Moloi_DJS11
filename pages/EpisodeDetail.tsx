@@ -23,7 +23,6 @@ export function EpisodesDetail({ seasons, selectedSeason, showTitle }: EpisodesL
   // Function to handle episode selection
   const handleEpisodeSelect = (episode: Episode) => {
     setCurrentAudio({ file: episode.file, title: episode.title });
-    console.log("Episode selected:", episode.file, episode.title);
   };
 
   // Toggle favourite status for the episode
