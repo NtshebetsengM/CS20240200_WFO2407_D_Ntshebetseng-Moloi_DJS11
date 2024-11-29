@@ -1,134 +1,98 @@
-//@ts-check
-import { Podcast } from "components/interfaces/types"
-import { useEffect, useState } from "react"
-import { Loading } from "../components/Loading"
-import { ErrorDisplay } from "../components/ErrorDisplay"
-import { PodcastList } from "../components/PodcastList"
-import { Toolbar } from "../components/Toolbar"
-import styles from "../styles/Home.module.css"
-
+import { useFavourite } from "../custom-hooks/useFavourite"; // Import the custom hook
+import { Loading } from "../components/Loading";
+import { ErrorDisplay } from "../components/ErrorDisplay";
+import { useState } from "react";
+import { Toolbar } from "../components/Toolbar";
+import styles from "../styles/favourites.module.css";
+import { Link } from "react-router-dom";
 
 export function Favourites() {
-
-  const [ favourites, setFavourites ] = useState<Podcast[]>([])
-  const [ loading, setLoading ] = useState(true)
+  const { favourites, removeFavourite, resetFavourites } = useFavourite(); // Use the custom hook
+  const [loading, setLoading] = useState(false); // Manage loading state
   const [error, setError] = useState<string | null>(null);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("A-Z");
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-      useEffect(()=> {
-        const storedFavourites = localStorage.getItem('favourites')
-        if(storedFavourites){
-          const favouriteIds = JSON.parse(storedFavourites)
-          fetch('https://podcast-api.netlify.app')
-          .then((res) => res.json())
-          .then((data) =>{
-            const favouritePodcasts = data.filter((podcast:Podcast) => 
-            favouriteIds.includes(podcast.id))
-            setFavourites(favouritePodcasts)
-            setLoading(false)
-          }).catch((error) => {
-            console.error('failed to fetch data', error);
-            setError(error.message);
-            setLoading(false);
-          })
-          
-        }
-      },[])
 
-      const toggleFavourite = (id: string) => {
-        
-        setFavourites((prev) => {
-          console.log("current favs", prev)
-          const updatedFavourites = prev.filter((fav) => fav.id !== id); // Ensure this returns a boolean
-          console.log("updated favs", updatedFavourites)
-          localStorage.setItem(
-            "favourites",
-            JSON.stringify(updatedFavourites.map((fav) => fav.id))
-          );
-          return updatedFavourites;
-        });
-      };
-      
-    
-      // Utility to format dates
-      const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-ZA", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        });
-      };
-
-      // Search and filter logic
-  const filteredFavourites = favourites.filter((podcast) => {
-    if (selectedGenres.length === 0) return true;
-    return selectedGenres.some((genre) => podcast.genre.includes(genre));
+  // Filter and sort favourites based on search, genres, and sort options
+  const filteredFavourites = favourites.filter((favourite) => {
+    if (selectedGenres.length > 0) {
+      return selectedGenres.some((genre) => favourite.showTitle.includes(genre)); // Adjust genre logic as needed
+    }
+    return favourite.episodeTitle.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   const sortedFavourites = filteredFavourites.sort((a, b) => {
     switch (sortOption) {
       case "A-Z":
-        return a.title.localeCompare(b.title);
+        return a.showTitle.localeCompare(b.showTitle);
       case "Z-A":
-        return b.title.localeCompare(a.title);
+        return b.showTitle.localeCompare(a.showTitle);
       case "Newest":
-        return new Date(b.updated).getTime() - new Date(a.updated).getTime();
+        return new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime();
       case "Oldest":
-        return new Date(a.updated).getTime() - new Date(b.updated).getTime();
+        return new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime();
       default:
         return 0;
     }
   });
 
-  if (loading) {
-    return <Loading/>;
-  }
-      if (error) {
-        return <ErrorDisplay/>
+  if (loading) return <Loading />;
+  if (error) return <ErrorDisplay />;
+
+  return (
+    <div>
+  <h1 className={styles.heading}>Your Favourites</h1>
+
+  <Toolbar
+    searchQuery={searchQuery}
+    onSearchChange={(e) => setSearchQuery(e.target.value)}
+    sortOption={sortOption}
+    onSortChange={(e) => setSortOption(e.target.value)}
+    toggleFilterCard={() => setIsOpen(!isOpen)}
+    genres={[]} // Add genres if available
+    selectedGenres={selectedGenres}
+    setSelectedGenres={setSelectedGenres}
+    isFilterOpen={isOpen}
+  />
+
+  <button
+    onClick={() => {
+      const confirmReset = window.confirm(`Are you sure you want to reset your favourites?`);
+      if (confirmReset) {
+        resetFavourites(); // Clear all favourites (adjust hook for bulk removal if needed)
       }
+    }}
+    className={styles.resetRemoveBtn}
+  >
+    Reset Favourites
+  </button>
 
-    return (
-      <div>
-        <h1 className={styles.heading}>Your Favourites</h1>
-
-        <Toolbar
-        searchQuery={searchQuery}
-        onSearchChange={(e) => setSearchQuery(e.target.value)}
-        sortOption={sortOption}
-        onSortChange={(e) => setSortOption(e.target.value)}
-        toggleFilterCard={() => setIsOpen(!isOpen)}
-        genres={[]} // Add genres here if needed
-        selectedGenres={selectedGenres}
-        setSelectedGenres={setSelectedGenres}
-        isFilterOpen={isOpen}
-      />
-
-      <button
-        onClick={() => {
-          localStorage.setItem('favourites', JSON.stringify([])); // Reset in localStorage
-          setFavourites([]); // Reset in state to update the UI
-        }}
-      >
-        Reset Favourites
-      </button>
-        {favourites.length === 0 ? (
-        <p>No favourites yet!</p>
-      ) : (
-        <PodcastList
-          podcasts={sortedFavourites}
-          favourites={favourites.map((fav) => fav.id)}
-          toggleFavourite={toggleFavourite}
-          formatDate={formatDate}
-        />
-      )}
+  {favourites.length === 0 ? (
+    <div className={styles.favContainer}>
+      <p>No favourites yet!</p>
+      <Link to="/" className="link-button">
+        Discover new podcasts!
+      </Link>
     </div>
+  ) : (
+    <div className={styles.favContainer}>
+      {sortedFavourites.map((fav) => (
+        <div key={`${fav.episodeTitle}-${fav.showTitle}`} className={styles.favCard}>
+          <h3>{fav.episodeTitle}</h3>
+          <p>Show: {fav.showTitle}</p>
+          <p>Added At: {new Date(fav.addedAt).toLocaleString()}</p>
+          <button onClick={() => removeFavourite(fav.episodeTitle, fav.showTitle)}
+            className={styles.resetRemoveBtn}>
+            Remove
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
 
-      
-    )
-  }
-  
+  );
+}

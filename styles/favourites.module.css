@@ -1,0 +1,51 @@
+div{
+    color: var(--accent);
+    background-color: var(--background);
+}
+
+.resetRemoveBtn{
+    background-color: transparent;
+    border:none;
+    color: red;
+}
+.resetRemoveBtn:hover{
+    cursor:pointer;
+    text-decoration: underline;
+}
+.favContainer {
+    display: grid;
+    grid-template-columns: 1fr; /* Default to 1 column */
+    gap: 1rem; /* Spacing between cards */
+    padding: 3rem;
+  }
+  
+  .favCard {
+    background-color: var(--secondary);
+    padding: 1rem;
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    max-width: 100%; /* Or adjust as needed */
+  }
+  
+  @media (min-width: 600px) {
+    .favContainer {
+      grid-template-columns: 1fr 1fr; /* Two columns for medium screens */
+    }
+  }
+  
+  @media (min-width: 1000px) {
+    .favContainer {
+      grid-template-columns: 1fr 1fr 1fr; /* Three columns for large screens */
+    }
+  }
+  
+  @media (min-width: 1700px) {
+    .favContainer {
+      grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns for extra large screens */
+    }
+  }
+  
