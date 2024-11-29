@@ -29,6 +29,14 @@ export function useAudioPlayback(initialAudio: { file: string; title: string } |
     console.log("stored time", currentTime)
   }, [currentAudio, currentTime]);
 
+useEffect(()=>{
+  if(audioRef.current){
+    audioRef.current.currentTime = 0
+    audioRef.current.load()
+    setIsPlaying(false)
+  }
+},[currentAudio])
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime;

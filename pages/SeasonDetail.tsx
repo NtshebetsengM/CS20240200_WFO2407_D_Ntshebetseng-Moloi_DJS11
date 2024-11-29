@@ -4,9 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import styles from "../styles/SeasonDetail.module.css";
 import { ErrorDisplay } from "../components/ErrorDisplay";
-import { AudioPlayer } from "../components/AudioPlayer";
 import { EpisodesDetail } from "./EpisodeDetail";
-import { useAudioPlayback } from "../custom-hooks/useAudioPlayback";
+
 
 export function SeasonDetail() {
   const { id } = useParams<string>();
@@ -21,13 +20,8 @@ export function SeasonDetail() {
   const [seasons, setSeason] = useState<Season[]>([]);
   const [updated, setUpdated] = useState<string>("");
   const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
-  const [currentAudio, setCurrentAudio] = useState<{
-    file: string;
-    title: string;
-  } | null>(null);
-
-  const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
-  const { audioRef, handleTimeUpdate } = useAudioPlayback(storedAudio);
+ 
+  
 
   useEffect(() => {
     fetch(showApiUrl)
@@ -68,10 +62,7 @@ export function SeasonDetail() {
 
   const formattedDate = formatDate(updated);
 
-  function handleAudioUpdate(file: string, title: string) {
-    setCurrentAudio({ file, title });
-    console.log("this is", title, file);
-  }
+  
 
   if (loading) return <Loading />;
   if (error) return <ErrorDisplay />;
@@ -115,15 +106,9 @@ export function SeasonDetail() {
       <EpisodesDetail
         seasons={seasons}
         selectedSeason={selectedSeason}
-        updateAudio={handleAudioUpdate}
         showTitle={title || ""}
       />
-      <AudioPlayer
-        currentAudio={currentAudio}
-        audioRef={audioRef}
-        handleTimeUpdate={handleTimeUpdate}
-        onClose={() => setCurrentAudio(null)} // Close handler
-      />
+      
     </div>
   );
 }

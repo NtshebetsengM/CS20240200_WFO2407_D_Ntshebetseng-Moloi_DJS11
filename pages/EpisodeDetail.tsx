@@ -2,51 +2,57 @@ import { ErrorDisplay } from "../components/ErrorDisplay";
 import { Season, Episode } from "../components/interfaces/types";
 import { useFavourite } from "../custom-hooks/useFavourite";
 import styles from "../styles/SeasonDetail.module.css";
-import { Loading } from "../components/Loading"; // Make sure the import path is correct
+import { Loading } from "../components/Loading"; 
+import { useState } from "react";
+import { useAudioPlayback } from "../custom-hooks/useAudioPlayback";
+import { AudioPlayer } from "../components/AudioPlayer";
 
 interface EpisodesListProps {
   seasons: Season[];
   selectedSeason: number | null;
-  updateAudio: (file: string, title: string) => void;
   showTitle: string;
 }
 
-export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle }: EpisodesListProps) {
+export function EpisodesDetail({ seasons, selectedSeason, showTitle }: EpisodesListProps) {
   const { favourites, addFavourite, removeFavourite, loading, error } = useFavourite(); // Hook for managing favorites
+  const [currentAudio, setCurrentAudio] = useState<{
+    file: string;
+    title: string;
+  } | null>(null);
 
+  // Function to handle episode selection
   const handleEpisodeSelect = (episode: Episode) => {
-    updateAudio(episode.file, episode.title);
+    setCurrentAudio({ file: episode.file, title: episode.title });
     console.log("Episode selected:", episode.file, episode.title);
   };
 
+  // Toggle favourite status for the episode
   const toggleFavourite = (episode: Episode) => {
     const favouriteItem = {
       episodeTitle: episode.title,
       showTitle: showTitle,
     };
 
-    // Check if the episode is already a favourite
     const exists = favourites.some(
       (fav) =>
         fav.episodeTitle === favouriteItem.episodeTitle &&
         fav.showTitle === favouriteItem.showTitle
     );
 
-    // If it exists (it's already a favourite), remove it
     if (exists) {
-      // Remove it from favourites
       removeFavourite(favouriteItem.episodeTitle, favouriteItem.showTitle);
     } else {
-      // If not, add it to favourites
       addFavourite(favouriteItem.episodeTitle, favouriteItem.showTitle);
     }
   };
+
+  const storedAudio = JSON.parse(localStorage.getItem("currentAudio") || "null");
+  const { audioRef, handleTimeUpdate } = useAudioPlayback(storedAudio);
 
   if (loading) {
     return <Loading />;
   }
 
-  // Display error message if there is an error
   if (error) {
     return <ErrorDisplay />;
   }
@@ -58,11 +64,11 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
         .map((season: Season) => (
           <div key={season.season}>
             <h2>{season.title} | {season.episodes.length} episodes</h2>
-            <img src={season.image} alt=""  className={styles.seasonImg} />
+            <img src={season.image} alt="" className={styles.seasonImg} />
             {season.episodes.map((episode) => (
               <div key={episode.episode}>
                 <h3>
-                  {episode.title}{" "}
+                  {episode.title}
                   <button
                     onClick={() => toggleFavourite(episode)}
                     className={
@@ -99,6 +105,15 @@ export function EpisodesDetail({ seasons, selectedSeason, updateAudio, showTitle
             ))}
           </div>
         ))}
+      <AudioPlayer
+        currentAudio={currentAudio}
+        audioRef={audioRef}
+        handleTimeUpdate={handleTimeUpdate}
+        onClose={() => {
+          setCurrentAudio(null);
+          localStorage.removeItem("currentAudio");
+        }} // Close handler
+      />
     </div>
   );
 }
