@@ -43,10 +43,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             onChange={onSearchChange}
           />
           <button className={styles.searchBtn}>
-            <img src="assets/svgs/search.svg" alt="" className={styles.icon} />
+            <img src="svgs/search.svg" alt="" className={styles.icon} />
           </button>
           <button className={styles.filterBtn} onClick={toggleFilterCard}>
-            <img src="assets/svgs/filter.svg" alt="" className={styles.icon} />
+            <img src="svgs/filter.svg" alt="" className={styles.icon} />
           </button>
   
           <label htmlFor="sort"></label>
