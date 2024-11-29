@@ -20,7 +20,7 @@ div{
   }
   
   .favCard {
-    background-color: var(--secondary);
+    border: 2px solid var(--primary);
     padding: 1rem;
     margin: 1rem;
     display: flex;

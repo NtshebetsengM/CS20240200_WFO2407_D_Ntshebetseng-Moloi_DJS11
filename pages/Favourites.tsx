@@ -3,7 +3,7 @@ import { Loading } from "../components/Loading";
 import { ErrorDisplay } from "../components/ErrorDisplay";
 import { useState } from "react";
 import { Toolbar } from "../components/Toolbar";
-import styles from "../styles/favourites.module.css";
+import styles from "../styles/Favourites.module.css";
 import { Link } from "react-router-dom";
 
 export function Favourites() {
@@ -40,6 +40,19 @@ export function Favourites() {
 
   if (loading) return <Loading />;
   if (error) return <ErrorDisplay />;
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.toLocaleDateString('en-ZA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })} ${date.toLocaleTimeString('en-ZA', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    })}`;
+  };
 
   return (
     <div>
@@ -82,7 +95,7 @@ export function Favourites() {
         <div key={`${fav.episodeTitle}-${fav.showTitle}`} className={styles.favCard}>
           <h3>{fav.episodeTitle}</h3>
           <p>Show: {fav.showTitle}</p>
-          <p>Added At: {new Date(fav.addedAt).toLocaleString()}</p>
+          <p>Added: {formatDate(fav.addedAt)}</p>
           <button onClick={() => removeFavourite(fav.episodeTitle, fav.showTitle)}
             className={styles.resetRemoveBtn}>
             Remove
