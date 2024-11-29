@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "../pages/Layout"
 import { Home } from "../pages/Home"
-import { ShowDetail } from "../pages/ShowDetail"
 import {SeasonDetail } from "../pages/SeasonDetail"
 import { Favourites } from "../pages/Favourites"
 import  NotFound  from "../pages/NotFound"
@@ -14,7 +13,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="podcast" element={<ShowDetail />} />
           <Route path="season/:id" element={<SeasonDetail />} />
           <Route path="favourites" element={<Favourites />} />
           <Route path="*" element={<NotFound/>} />
