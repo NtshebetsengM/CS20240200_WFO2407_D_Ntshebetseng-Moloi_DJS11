@@ -112,7 +112,7 @@ export function EpisodesDetail({ seasons, selectedSeason, showTitle }: EpisodesL
         onClose={() => {
           setCurrentAudio(null);
           localStorage.removeItem("currentAudio");
-        }} // Close handler
+        }} 
       />
     </div>
   );

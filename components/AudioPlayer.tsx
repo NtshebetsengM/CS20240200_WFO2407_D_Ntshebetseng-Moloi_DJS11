@@ -24,7 +24,7 @@ export const AudioPlayer = ({
         onTimeUpdate={handleTimeUpdate}
         controls
       />
-      <button onClick={onClose}>Close</button> {/* Trigger the onClose prop */}
+      <button onClick={onClose} className={styles.closeBtn}>Close</button> {/* Trigger the onClose prop */}
     </div>
   );
 };

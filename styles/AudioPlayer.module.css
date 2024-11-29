@@ -14,6 +14,7 @@
 
 .audioControls {
     display: flex;
+    justify-content: center;
     gap: 2rem;
     position: fixed;
     bottom: 0; /* Start off-screen */
@@ -24,6 +25,9 @@
     transition: bottom 0.3s ease; /* Smooth transition for sliding up */
   }
   
-  .closebtn{
-    display: none;
+  .closeBtn{
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 1.5rem;
   }
